@@ -1,95 +1,260 @@
-﻿<!DOCTYPE html>
-{% load static %}
+﻿{% load static %}
+
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Edo{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
     <style>
-        .fade-in {
-            animation: fadeIn 0.5s;
-        }
+      .fade-in {
+        animation: fadeIn 0.5s;
+      }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
         }
+        to {
+          opacity: 1;
+        }
+      }
 
-        #navbar.scrolled {
-            background-color: #ba920d;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            color: black;
-            transition: background-color 0.3s ease;
-        }
+      #navbar.scrolled {
+        background-color: #ba920d;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        color: black;
+        transition: background-color 0.3s ease;
+      }
 
-        #navbar.scrolled:hover {
-            color: white;
-        }
+      #navbar.scrolled:hover {
+        color: white;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
+
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #f1f1f1;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .lang-toggle {
+        font-size: 14px;
+        padding: 6px 12px;
+        border: 1px solid #ba920d;
+        border-radius: 4px;
+        background-color: #ba920d;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .lang-toggle:hover {
+        background-color: #9c7b0c;
+      }
     </style>
-</head>
-<body class="text-white">
-
-    <nav id="navbar" class="flex justify-between items-center p-6 bg-[#f6eb61] fixed w-full z-10 transition">
-        <div class="text-3xl font-bold">EDO</div>
-        <div class="flex-1 text-center space-x-8 font-bold">
-            <a href="#" class="hover:text-yellow-400 transition">About Us</a>
-            <a href="#" class="hover:text-yellow-400 transition">Projects</a>
-            <a href="#" class="hover:text-yellow-400 transition">Partners</a>
-            <a href="#" class="hover:text-yellow-400 transition">Training</a>
+  </head>
+  <body class="text-white">
+    <nav
+      id="navbar"
+      class="flex justify-between items-center p-6 bg-[#f6eb61] fixed w-full z-10 transition"
+    >
+      <div class="text-3xl font-bold">EDO</div>
+      <div class="flex-1 text-center space-x-8 font-bold">
+        <a href="#" class="hover:text-yellow-400 transition">About Us</a>
+        <div class="dropdown inline-block relative">
+          <a href="#" class="hover:text-yellow-400 transition">Projects</a>
+          <div class="dropdown-content">
+            <a href="#">Seasonal Projects</a>
+            <a href="#">Past Projects</a>
+            <a href="#">Sharing Projects</a>
+          </div>
         </div>
-        <div>
-            <a href="#" class="bg-yellow-400 text-gray-900 py-2 px-4 rounded-lg hover:bg-yellow-500 transition">Donate</a>
-        </div>
+        <a href="#" class="hover:text-yellow-400 transition">Partners</a>
+        <a href="#" class="hover:text-yellow-400 transition">Training</a>
+      </div>
+      <div>
+        <button id="lang-toggle" class="lang-toggle">عربي</button>
+        <a
+          href="#"
+          class="bg-yellow-400 text-gray-900 py-2 px-4 rounded-lg hover:bg-yellow-500 transition"
+          >Donate</a
+        >
+      </div>
     </nav>
 
-    <header class="relative h-screen bg-cover bg-center hero-section" >
-        <div class="flex items-center justify-center h-full bg-gray-900 bg-opacity-50">
-            <div class="text-center fade-in">
-                <h1 class="text-4xl md:text-5xl font-bold">Empowering <span class="text-yellow-400">Communities</span> with Edo</h1>
-                <h1 class="my-5 text-2xl md:text-3xl font-bold">تمكين المجتمعات من خلال EDO</h1>
-                <p class="mt-4 text-lg md:text-xl max-w-xl mx-auto">
-                    Join us in our mission to make a positive impact through charity and collaboration. Edo is dedicated to providing essential support and fostering growth in communities worldwide.
-                </p>
-                <div class="mt-10">
-                    <a href="#" class="bg-yellow-400 text-gray-900 py-2 px-4 rounded-lg hover:bg-yellow-500 transition">Learn More</a>
-                    <a href="#" class="ml-4 bg-transparent py-2 px-4 rounded-lg border-2 border-yellow-400 hover:bg-yellow-400 hover:text-gray-900 transition">Get Involved</a>
-                </div>
-            </div>
+    <header class="relative h-screen bg-cover bg-center hero-section">
+      <div
+        class="flex items-center justify-center h-full bg-gray-900 bg-opacity-50"
+      >
+        <div class="text-center fade-in">
+          <h1 class="text-4xl md:text-5xl font-bold">
+            Empowering <span class="text-yellow-400">Communities</span> with EDO
+          </h1>
+
+          <h1 class="my-6 text-2xl md:text-3xl font-bold">
+            تمكين المجتمعات من خلال EDO
+          </h1>
+
+          <p class="mt-4 text-lg md:text-xl max-w-xl mx-auto">
+            Join us in our mission to make a positive impact through charity and
+            collaboration. Edo is dedicated to providing essential support and
+            fostering growth in communities worldwide.
+          </p>
+          <div class="mt-10">
+            <a
+              href="#"
+              class="bg-yellow-400 text-gray-900 py-2 px-4 rounded-lg hover:bg-yellow-500 transition"
+              >Learn More</a
+            >
+            <a
+              href="#"
+              class="ml-4 bg-transparent py-2 px-4 rounded-lg border-2 border-yellow-400 hover:bg-yellow-400 hover:text-gray-900 transition"
+              >Get Involved</a
+            >
+          </div>
         </div>
+      </div>
     </header>
 
     {% block content %}{% endblock %}
 
     <footer class="bg-gray-800 text-gray-300 py-8 mt-10">
-        <div class="container mx-auto text-center">
-            <p>&copy; {{ current_year }} Edo. All rights reserved.</p>
-            <div class="mt-4 space-x-4">
-                <a href="#" class="hover:text-yellow-400 transition">Privacy Policy</a>
-                <a href="#" class="hover:text-yellow-400 transition">Terms of Service</a>
-            </div>
+      <div class="container mx-auto text-center">
+        <p>&copy; {{ current_year }} Edo. All rights reserved.</p>
+        <div class="mt-4 space-x-4">
+          <a href="#" class="hover:text-yellow-400 transition"
+            >Privacy Policy</a
+          >
+          <a href="#" class="hover:text-yellow-400 transition"
+            >Terms of Service</a
+          >
         </div>
+      </div>
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const navbar = document.getElementById('navbar');
+      let googleTranslateInitialized = false; // Flag to track initialization
 
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 1) { // Change this value to adjust when the background changes
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
+      function googleTranslateElementInit() {
+        if (!googleTranslateInitialized) {
+          // Initialize only once
+          new google.translate.TranslateElement(
+            {
+              pageLanguage: "auto",
+              includedLanguages: "en,ar", // Languages you want to support
+              layout: google.translate.TranslateElement.InlineLayout.SIMPLE, // Or other layout
+            },
+            "google_translate_element"
+          );
+          googleTranslateInitialized = true; // Set the flag
+        }
+      }
 
-            const elements = document.querySelectorAll('.fade-in');
-            elements.forEach(el => {
-                el.classList.add('fade-in');
-            });
+      document.addEventListener("DOMContentLoaded", function () {
+        const navbar = document.getElementById("navbar");
+
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 1) {
+            // Change this value to adjust when the background changes
+            navbar.classList.add("scrolled");
+          } else {
+            navbar.classList.remove("scrolled");
+          }
         });
+
+        const elements = document.querySelectorAll(".fade-in");
+        elements.forEach((el) => {
+          el.classList.add("fade-in");
+        });
+
+        // Dropdown toggle functionality
+        const dropdowns = document.querySelectorAll(".dropdown");
+        dropdowns.forEach((dropdown) => {
+          const dropdownButton = dropdown.querySelector("a");
+          const dropdownContent = dropdown.querySelector(".dropdown-content");
+
+          dropdownButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            dropdownContent.classList.toggle("hidden");
+          });
+
+          // Close dropdown if clicked outside
+          window.addEventListener("click", function (event) {
+            if (!event.target.matches(".dropdown a")) {
+              dropdowns.forEach((dropdown) => {
+                const dropdownContent =
+                  dropdown.querySelector(".dropdown-content");
+                if (!dropdownContent.classList.contains("hidden")) {
+                  dropdownContent.classList.add("hidden");
+                }
+              });
+            }
+          });
+        });
+
+        const langToggle = document.getElementById("lang-toggle");
+        const googleTranslateElement = document.getElementById(
+          "google_translate_element"
+        ); // Get the div
+
+        langToggle.addEventListener("click", function () {
+          if (langToggle.textContent === "عربي") {
+            langToggle.textContent = "English";
+            googleTranslateElement.innerHTML = ""; // Clear previous widget
+            new google.translate.TranslateElement(
+              {
+                pageLanguage: "auto",
+                includedLanguages: "en,ar",
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+              },
+              "google_translate_element"
+            );
+          } else {
+            langToggle.textContent = "عربي";
+            googleTranslateElement.innerHTML = ""; // Clear previous widget
+
+            new google.translate.TranslateElement(
+              {
+                pageLanguage: "auto",
+                includedLanguages: "en,ar",
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+              },
+              "google_translate_element"
+            );
+          }
+        });
+      });
     </script>
 
-</body>
+    <!-- Google Translate Element -->
+    <div id="google_translate_element" class="hidden"></div>
+  </body>
 </html>

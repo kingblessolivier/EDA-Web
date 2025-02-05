@@ -1,3 +1,7 @@
 ﻿.hero-section {
     background-image: url('../images/hero_image.jpg');
 }
+
+.hidden {
+    display: none;
+}
