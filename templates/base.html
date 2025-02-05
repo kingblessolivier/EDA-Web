@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Edo{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        #navbar.scrolled {
+            background-color: #ba920d;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            color: black;
+            transition: background-color 0.3s ease;
+        }
+
+        #navbar.scrolled:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body class="text-white">
+
+    <nav id="navbar" class="flex justify-between items-center p-6 bg-[#f6eb61] fixed w-full z-10 transition">
+        <div class="text-3xl font-bold">EDO</div>
+        <div class="flex-1 text-center space-x-8 font-bold">
+            <a href="#" class="hover:text-yellow-400 transition">About Us</a>
+            <a href="#" class="hover:text-yellow-400 transition">Projects</a>
+            <a href="#" class="hover:text-yellow-400 transition">Partners</a>
+            <a href="#" class="hover:text-yellow-400 transition">Training</a>
+        </div>
+        <div>
+            <a href="#" class="bg-yellow-400 text-gray-900 py-2 px-4 rounded-lg hover:bg-yellow-500 transition">Donate</a>
+        </div>
+    </nav>
+
+    <header class="relative h-screen bg-cover bg-center hero-section" >
+        <div class="flex items-center justify-center h-full bg-gray-900 bg-opacity-50">
+            <div class="text-center fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold">Empowering <span class="text-yellow-400">Communities</span> with Edo</h1>
+                <h1 class="my-5 text-2xl md:text-3xl font-bold">تمكين المجتمعات من خلال EDO</h1>
+                <p class="mt-4 text-lg md:text-xl max-w-xl mx-auto">
+                    Join us in our mission to make a positive impact through charity and collaboration. Edo is dedicated to providing essential support and fostering growth in communities worldwide.
+                </p>
+                <div class="mt-10">
+                    <a href="#" class="bg-yellow-400 text-gray-900 py-2 px-4 rounded-lg hover:bg-yellow-500 transition">Learn More</a>
+                    <a href="#" class="ml-4 bg-transparent py-2 px-4 rounded-lg border-2 border-yellow-400 hover:bg-yellow-400 hover:text-gray-900 transition">Get Involved</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer class="bg-gray-800 text-gray-300 py-8 mt-10">
+        <div class="container mx-auto text-center">
+            <p>&copy; {{ current_year }} Edo. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="hover:text-yellow-400 transition">Privacy Policy</a>
+                <a href="#" class="hover:text-yellow-400 transition">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const navbar = document.getElementById('navbar');
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 1) { // Change this value to adjust when the background changes
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(el => {
+                el.classList.add('fade-in');
+            });
+        });
+    </script>
+
+</body>
+</html>
