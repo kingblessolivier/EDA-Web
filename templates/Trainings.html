@@ -1,0 +1,142 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Training Programs - Edo{% endblock %}
+
+{% block content %}
+
+
+<style>
+    .buttons {
+        display: inline-block;
+
+    }
+    .button-primary {
+        display: inline-block;
+        background-color: #1D4ED8; /* Blue */
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        text-align: center;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    .button-primary:hover {
+        background-color: #2563EB; /* Darker blue */
+        transform: scale(1.05);
+    }
+
+    .button-secondary {
+        display: inline-block;
+        background-color: #FBBF24; /* Yellow */
+        padding: 10px 20px;
+        color: white;
+        border-radius: 25px;
+        font-weight: bold;
+        border: none;
+        transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    }
+    .button-secondary:hover {
+        background-color: #F59E0B; /* Darker yellow */
+        transform: scale(1.05);
+    }
+
+    .button-danger {
+        padding: 10px 20px;
+        border-radius: 25px;
+        text-align: center;
+        font-weight: bold;
+        color: red;
+        border: 2px solid #EF4444; /* Red border */
+        background-color: transparent;
+        transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    }
+    .button-danger:hover {
+        background-color: #EF4444; /* Red */
+        color: white;
+        transform: scale(1.05);
+    }
+    .hero-section{
+        height: 20vh;
+        background-color: rgb(37, 35, 5);
+    }
+</style>
+
+
+
+
+
+<section class="hero-section block h-20 py-10 items-center justify-center text-center bg-yellow-900 text-white">
+    <h1 class="text-4xl font-bold">Training Programs</h1>
+    <p class="mt-4 text-lg">Empowering individuals through knowledge and skills.</p>
+</section>
+
+<main class="container mx-auto py-10">
+    <h2 class="text-3xl font-semibold text-center mb-8">Our Training Sessions</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-10">
+        {% for training in trainings %}
+        <div class="bg-white shadow-md rounded-lg overflow-hidden transition-transform hover:shadow-lg border border-gray-300">
+            <img src="{{ training.image.url }}" alt="{{ training.name }}" class="w-full h-48 object-cover">
+            <div class="p-5">
+                <h3 class="text-xl font-semibold">{{ training.name }}</h3>
+                <p class="mt-2 text-gray-700">{{ training.description }}</p>
+                <a href="{% url 'training_detail' training.id %}" class="button-primary">Learn More</a>
+                {% if user.is_authenticated %}
+                <div class="buttons">
+                    <a href="{% url 'update_training' training.id %}" class="button-secondary">Edit</a>
+                    <form action="{% url 'delete_training' training.id %}" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
+                        {% csrf_token %}
+                        <button type="submit" class="button-danger">Delete</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-gray-700 text-center">No training sessions available at the moment.</p>
+        {% endfor %}
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="text-center mt-6">
+        <a href="{% url 'add_training' %}" class="button-primary">Add Training</a>
+    </div>
+    {% endif %}
+
+    <h2 class="text-3xl font-semibold text-center mt-10 mb-6">Some of Our Achievements</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <!-- Achievements Section (Static for now) -->
+        <div class="bg-white shadow-md rounded-lg p-5 border border-gray-300">
+            <h3 class="text-xl font-semibold">Achievements in First Aid</h3>
+            <p class="mt-2">Summary of achievements from the First Aid training sessions.</p>
+            <img src="static/images/first_aid_achievements.jpg" alt="First Aid Achievements" class="mt-4 rounded-lg">
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg p-5 border border-gray-300">
+            <h3 class="text-xl font-semibold">Achievements in Positive Values Training</h3>
+            <p class="mt-2">Summary of achievements from the Positive Values training sessions.</p>
+            <img src="static/images/positive_values_achievements.jpg" alt="Positive Values Achievements" class="mt-4 rounded-lg">
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg p-5 border border-gray-300">
+            <h3 class="text-xl font-semibold">Achievements in Micro Projects</h3>
+            <p class="mt-2">Summary of achievements from the Micro Projects training.</p>
+            <img src="static/images/micro_projects_achievements.jpg" alt="Micro Projects Achievements" class="mt-4 rounded-lg">
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg p-5 border border-gray-300">
+            <h3 class="text-xl font-semibold">Achievements in ICT Training</h3>
+            <p class="mt-2">Summary of achievements from the ICT training sessions.</p>
+            <img src="static/images/ict_achievements.jpg" alt="ICT Achievements" class="mt-4 rounded-lg">
+        </div>
+    </div>
+</main>
+
+<script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this training session?");
+    }
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,127 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Partners - Edo{% endblock %}
+
+{% block content %}
+<style>
+    .hero-section {
+        height: 20vh;
+        background-color: rgb(37, 35, 5);
+    }
+
+    .popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .popup-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 300px;
+    }
+
+    .popup-content button {
+        margin: 0 10px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .popup-content .confirm-btn {
+        background-color: #2196F3;
+        color: white;
+    }
+
+    .popup-content .cancel-btn {
+        background-color: #f44336;
+        color: white;
+    }
+</style>
+
+<section class="hero-section block h-full py-24 items-center justify-center text-center bg-blue-600 text-white">
+    <h1 class="text-4xl font-bold">Our Partners</h1>
+    <p class="mt-4 text-lg">Building strong relationships for a brighter future.</p>
+</section>
+
+<main class="container mx-auto py-10">
+    <h2 class="text-3xl font-semibold text-center mb-8">Valued Partnerships</h2>
+
+    {% if user.is_authenticated %}
+        <div class="text-center mb-8">
+            <a href="{% url 'add_partner' %}" class="bg-blue-500 text-white px-4 py-2 rounded">Add Partner</a>
+        </div>
+    {% endif %}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for partner in partners %}
+        <div class="flex items-start bg-white shadow-lg rounded-lg p-5 transition-transform transform hover:scale-105">
+            <img src="{{ partner.image.url }}" alt="{{ partner.name }} Logo" class="w-32 h-32 mr-5 object-contain">
+            <div>
+                <h3 class="text-xl font-semibold">{{ partner.name }}</h3>
+                <p class="mt-2 text-gray-700">{{ partner.description }}</p>
+                {% if user.is_authenticated %}
+                    <div class="mt-2">
+                        <a href="{% url 'edit_partner' partner.id %}" class="text-blue-500">Edit</a>
+                        <button class="text-red-500" onclick="openPopup({{ partner.id }})">Delete</button>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if not partners %}
+        <p class="text-center text-gray-500">No partners available.</p>
+    {% endif %}
+</main>
+
+<!-- Popup HTML -->
+<div id="popupOverlay" class="popup-overlay">
+    <div class="popup-content">
+        <p>Are you sure you want to delete this partner?</p>
+        <button class="confirm-btn" id="confirmBtn" onclick="confirmDelete()">Confirm</button>
+        <button class="cancel-btn" onclick="closePopup()">Cancel</button>
+    </div>
+</div>
+
+<script>
+    function openPopup(partnerId) {
+        document.getElementById('popupOverlay').style.display = 'flex';
+        document.getElementById('confirmBtn').dataset.partnerId = partnerId;
+    }
+
+    function closePopup() {
+        document.getElementById('popupOverlay').style.display = 'none';
+    }
+
+    function confirmDelete() {
+        const partnerId = document.getElementById('confirmBtn').dataset.partnerId;
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `{% url 'delete_partner' 0 %}`.replace('0', partnerId);
+        form.style.display = 'none';
+
+        // Add CSRF token
+        const csrfTokenInput = document.createElement('input');
+        csrfTokenInput.type = 'hidden';
+        csrfTokenInput.name = 'csrfmiddlewaretoken';
+        csrfTokenInput.value = '{{ csrf_token }}';
+        form.appendChild(csrfTokenInput);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,45 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Add Training - Edo{% endblock %}
+
+{% block content %}
+<section class="hero-section block h-full py-24 items-center justify-center text-center bg-yellow-900 text-white">
+    <h1 class="text-4xl font-bold">Add New Training</h1>
+    <p class="mt-4 text-lg">Empowering individuals through knowledge and skills.</p>
+</section>
+
+<main class="container mx-auto py-10">
+    <h2 class="text-3xl font-semibold text-center mb-8">Create a New Training Session</h2>
+
+    <form action="{% url 'add_training' %}" method="POST" enctype="multipart/form-data" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700">Training Name</label>
+            <input type="text" name="name" id="name" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+            <input type="text" name="location" id="location" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+            <textarea name="description" id="description" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required></textarea>
+        </div>
+
+        <div class="mb-4">
+            <label for="image" class="block text-sm font-medium text-gray-700">Upload Image</label>
+            <input type="file" name="image" id="image" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+        </div>
+
+        <div class="flex items-center justify-between">
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Add Training</button>
+        </div>
+    </form>
+
+    <div class="mt-4 text-center">
+        <a href="{% url 'trainings' %}" class="text-blue-500">Back to Training List</a>
+    </div>
+</main>
+{% endblock %}

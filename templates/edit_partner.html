@@ -1,0 +1,49 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Edit Partner - Edo{% endblock %}
+
+{% block content %}
+<style>
+      .hero-section{
+        height: 20vh;
+        background-color: rgb(37, 35, 5);
+    }
+</style>
+<section class="hero-section block h-full py-24 items-center justify-center text-center bg-yellow-900 text-white">
+    <h1 class="text-4xl font-bold">Edit Partner</h1>
+    <p class="mt-4 text-lg">Update the partner details as needed.</p>
+</section>
+
+<main class="container mx-auto py-10">
+    <h2 class="text-3xl font-semibold text-center mb-8">Edit Partner Entry</h2>
+
+    <form action="{% url 'edit_partner' partner.id %}" method="POST" enctype="multipart/form-data" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700">Partner Name</label>
+            <input type="text" name="name" id="name" value="{{ partner.name }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+            <textarea name="description" id="description" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>{{ partner.description }}</textarea>
+        </div>
+
+        <div class="mb-4">
+            <label for="image" class="block text-sm font-medium text-gray-700">Upload New Logo/Image (optional)</label>
+            <input type="file" name="image" id="image" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            {% if partner.image %}
+                <p class="mt-2 text-sm text-gray-500">Current Image: <img src="{{ partner.image.url }}" alt="{{ partner.name }} Logo" class="w-32 h-32 object-contain"></p>
+            {% endif %}
+        </div>
+
+        <div class="flex items-center justify-between">
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Update Partner</button>
+        </div>
+    </form>
+
+    <div class="mt-4 text-center">
+        <a href="{% url 'partners' %}" class="text-blue-500">Back to Partners List</a>
+    </div>
+</main>
+{% endblock %}

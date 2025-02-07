@@ -1,0 +1,211 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+
+  .hero-section h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-section p {
+    font-size: 1.8rem;
+    font-weight: 300;
+  }
+
+  .section {
+    padding: 60px 20px;
+  }
+
+  .section h2 {
+    color: #333;
+    font-size: 2.5rem;
+    margin: 40px 0 20px;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .card {
+    background-color: #ffffff; /* White background for cards */
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    padding: 30px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #4a90e2; /* Accent color */
+  }
+
+  .card p, .card ul {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+  }
+
+  .team-member {
+    text-align: center;
+    transition: transform 0.3s;
+  }
+
+  .team-member img {
+    width: 100%; /* Responsive image */
+    border-radius: 50%; /* Circular image */
+    max-width: 150px; /* Limit maximum size */
+    border: 3px solid #4a90e2; /* Accent border */
+  }
+
+  .team-member h3 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #333;
+  }
+
+  .team-member p {
+    font-size: 0.9rem;
+    color: #777;
+  }
+
+  .team-member:hover {
+    transform: scale(1.05);
+  }
+
+  /* Form Styles */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 12px;
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: #4a90e2; /* Accent color on focus */
+    outline: none;
+  }
+
+  .contact-form button {
+    background-color: #4a90e2; /* Accent background */
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+
+  .contact-form button:hover {
+    background-color: #357ab8; /* Darker shade on hover */
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .section {
+      padding: 40px 10px;
+    }
+
+    .hero-section h1 {
+      font-size: 2.5rem;
+    }
+
+    .hero-section p {
+      font-size: 1.2rem;
+    }
+  }
+</style>
+
+
+<section class="section about-section">
+  <h2>Discover EDO's Mission and Values</h2>
+
+  <div class="card">
+    <h3>1. Introduction</h3>
+    <p>EDO (Espoir de l’Avenir) is a Non-Governmental Organization, operating in Rwanda since 2014 and officially recognized by the Rwanda Governance Board (RGB).</p>
+  </div>
+
+  <div class="card">
+    <h3>2. Our Vision</h3>
+    <p>To lead innovative initiatives that provide effective services and programs to the community.</p>
+  </div>
+
+  <div class="card">
+    <h3>3. Our Mission</h3>
+    <p>Our mission focuses on education and welfare, specifically:</p>
+    <ul>
+      <li>Empowering youth through vocational training.</li>
+      <li>Advocating for vulnerable populations both locally and internationally.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>4. Key Initiatives</h3>
+    <ul>
+      <li>Vocational training programs to create employment opportunities for youth.</li>
+      <li>Support for projects aimed at improving the welfare of vulnerable populations.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>5. Our Slogan</h3>
+    <p>“Together for our better future.”</p>
+  </div>
+</section>
+
+<section id="team" class="section py-10 bg-gray-100">
+  <h2 class="text-3xl font-bold mb-6 text-center">Meet Our Team</h2>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+    <div class="team-member">
+      <img src="{% static 'images/man6.jpeg' %}" alt="Alice Johnson" class="team-member-img" />
+      <h3>Alice Johnson</h3>
+      <p>Project Manager - Expert in project execution.</p>
+    </div>
+    <div class="team-member">
+      <img src="{% static 'images/man2.jpeg' %}" alt="Bob Smith" class="team-member-img" />
+      <h3>Bob Smith</h3>
+      <p>Lead Developer - Specialist in web technologies.</p>
+    </div>
+    <div class="team-member">
+      <img src="{% static 'images/man1.jpeg' %}" alt="Carol White" class="team-member-img" />
+      <h3>Carol White</h3>
+      <p>Marketing Director - Drives the marketing strategy.</p>
+    </div>
+    <div class="team-member">
+      <img src="{% static 'images/man0.jpeg' %}" alt="David Brown" class="team-member-img" />
+      <h3>David Brown</h3>
+      <p>Financial Analyst - Manages project budgets.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section contact-section">
+  <h2>Contact Us</h2>
+  <div class="card">
+    <form class="contact-form">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+{% endblock content %}

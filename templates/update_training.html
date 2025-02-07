@@ -1,0 +1,59 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Edit Training - Edo{% endblock %}
+
+{% block content %}
+<style>
+      .hero-section{
+        height: 20vh;
+        background-color: rgb(37, 35, 5);
+    }
+</style>
+
+
+
+
+
+<section class="hero-section block h-full py-24 items-center justify-center text-center bg-yellow-900 text-white">
+    <h1 class="text-4xl font-bold">Edit Training</h1>
+    <p class="mt-4 text-lg">Update the details of the training session.</p>
+</section>
+
+
+<main class="container mx-auto py-10">
+    <h2 class="text-3xl font-semibold text-center mb-8">Edit Training Session</h2>
+
+    <form action="{% url 'update_training' training.id %}" method="POST" enctype="multipart/form-data" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+        {% csrf_token %}
+
+        <div class="mb-4">
+            <label for="id_name" class="block text-sm font-medium text-gray-700">Training Name</label>
+            <input type="text" name="name" id="id_name" value="{{ training.name }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="id_location" class="block text-sm font-medium text-gray-700">Location</label>
+            <input type="text" name="location" id="id_location" value="{{ training.location }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="id_description" class="block text-sm font-medium text-gray-700">Description</label>
+            <textarea name="description" id="id_description" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>{{ training.description }}</textarea>
+        </div>
+
+        <div class="mb-4">
+            <label for="id_image" class="block text-sm font-medium text-gray-700">Upload New Image (optional)</label>
+            <input type="file" name="image" id="id_image" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <p class="mt-2 text-gray-500">Current Image: <img src="{{ training.image.url }}" alt="{{ training.name }}" class="mt-2 w-32 h-32 object-cover"></p>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-200">Update Training</button>
+        </div>
+    </form>
+
+    <div class="mt-4 text-center">
+        <a href="{% url 'trainings' %}" class="text-blue-500 underline">Back to Training List</a>
+    </div>
+</main>
+{% endblock %}
