@@ -272,12 +272,10 @@
     <div id="google_translate_element" class="hidden"></div>
 
     <script>
-        // Function to initialize Google Translate
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
         }
 
-        // Function to handle dropdown visibility
         function toggleDropdown(event) {
             const dropdownContent = event.target.nextElementSibling;
             if (dropdownContent.style.display === "block") {
@@ -287,24 +285,29 @@
             }
         }
 
-        // Function to handle mobile menu visibility
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('hidden');
         }
 
-        // Add event listeners to dropdown toggles
         document.querySelectorAll('.dropdown-toggle').forEach(item => {
             item.addEventListener('click', event => {
                 event.preventDefault();
                 toggleDropdown(event);
             });
         });
-
-        // Add event listener to hamburger menu for mobile view
         document.getElementById('hamburger-menu').addEventListener('click', toggleMobileMenu);
+        document.getElementById('lang-toggle').addEventListener('click', function() {
+            document.documentElement.lang = 'ar';
+            location.reload();
+        });
+        document.getElementById('lang-toggle-mobile').addEventListener('click', function() {
+            document.documentElement.lang = 'ar';
+            location.reload();
 
-        // Optional: Close mobile menu and dropdowns when clicking outside of them
+
+        }
+        );
         window.addEventListener('click', function(event) {
             if (!event.target.matches('.dropdown-toggle, .fas.fa-bars')) {
                 document.querySelectorAll('.dropdown-content').forEach(content => {
