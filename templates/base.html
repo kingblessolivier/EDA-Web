@@ -5,18 +5,39 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}Edo{% endblock %}</title>
+    <title>
+
+        {% block title %} Espoir de l’Avenir{% endblock %}</title>
+    <link rel="icon" type="image/png" href="/static/images/eda_logo.png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <style>
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+         .dropdown:hover .dropdown-content {
+            display: block;
+        }
         /* Color Variables */
         :root {
             --primary-color: #4a3a04; /* Dark Blue */
-            --accent-color: #ffcc00; /* Bright Yellow */
+            --accent-color: rgba(250, 233, 9, 0.91); /* Bright Yellow */
             --background-color: rgba(248, 248, 248, 0.8); /* Light Background */
-            --dark-background: #1a1a1a; /* Dark Background */
+            --dark-background: rgba(5, 1, 1, 0.85); /* Dark Background */
         }
+
+        #hamburger-menu i{
+             padding: 10px 20px;
+            border-radius: 5px;
+            background-color: var(--primary-color); /* Dark Blue */
+            color: #fff9f9; /* Dark Blue */
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+        }
+
 
         * {
             box-sizing: border-box;
@@ -50,77 +71,56 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 40px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .nav-item {
-            transition: color 0.3s ease;
-            margin: 0 10px;
+
+        .nav-item , .dropdown {
+            cursor: pointer;
+            padding: 10px;
         }
 
         .nav-item:hover {
-            color: #f3f6fa; /* Green */
+            color: #e1f8f2; /* Green */
+            border-radius: 5px;
+            background-color: rgba(255, 255, 0, 0.06); /* Light Yellow */
+            border-bottom-color: rgba(255, 255, 0, 0.06);
         }
 
         .dropdown-content {
             background-color: var(--primary-color); /* Dark Blue for dropdown */
             border-radius: 0.5rem;
-            padding: 0.5rem 0;
             position: absolute;
+            margin-top: -5px;
+            padding: 0.5rem;
             width: 150px;
             top: 100%;
             left: 0;
             right: 0;
             z-index: 1;
             display: none; /* Hidden by default */
+
         }
 
         .dropdown-content a {
             color: #FFFFFF; /* White text */
-            padding: 0.5rem 1rem;
+            padding: 0.5rem;
             transition: background-color 0.3s;
         }
 
         .dropdown-content a:hover {
-            background-color: #0f6dcc; /* Dark Blue hover */
+              border-radius: 5px;
+              background-color: rgba(255, 255, 0, 0.06); /* Light Yellow */
             color: #FFFFFF; /* White text */
         }
 
         footer {
-            background-color: #003366; /* Dark Blue */
-            color: #FFCC33; /* Yellow text */
+            background-color: #4a3a04; /* Dark Blue */
+            color: #e8eaf1; /* Yellow text */
         }
 
         footer a:hover {
-            color: #4CAF50; /* Green hover */
-        }
-
-        .hero-section {
-            background-image: url('static/images/hero_image.jpg'); /* Ensure this path is correct */
-            height: 80vh;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .hero-title {
-            color: var(--accent-color); /* Light Yellow */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            font-size: 2.5rem;
-        }
-
-        .hero-button {
-            background-color: #003366; /* Green */
-            border: none;
-            font-size: 1.2rem;
-            color: white;
-            padding: 12px 24px; /* Increased padding */
-            border-radius: 0.5rem;
-            margin: 10px; /* Margin for spacing */
-            transition: background-color 0.3s;
-        }
-
-        .hero-button:hover {
-            background-color: #227727; /* Darker Green */
+            color: #978f1b; /* Green hover */
         }
 
         /* Responsive Adjustments */
@@ -172,16 +172,14 @@
     <header>
         <nav id="navbar" class="flex justify-between items-center p-0  fixed w-full z-10 transition">
             <div class="flex justify-center flex-grow">
-                <a href="{% url 'index' %}"><img src="{% static 'images/vist.png' %}" alt="Edo Logo" class="w-20"></a>
-                <div class="text-3xl font-bold">EDa</div>
+                <a href="{% url 'index' %}"><img src="{% static 'images/eda_logo.png' %}" alt="Eda Logo" class="w-20 rounded-full"/></a>
             </div>
             <div class="hidden md:flex flex-grow justify-center space-x-8 font-bold">
                 <a href="{% url 'index' %}" class="nav-item"><i class="fas fa-home"></i> Home</a>
                 <a href="{% url 'about' %}" class="nav-item"><i class="fas fa-users"></i> About Us</a>
                 <div class="dropdown inline-block relative">
-                    <a href="#" class="nav-item dropdown-toggle"><i class="fas fa-project-diagram"></i> Projects <i class="fas fa-angle-down"></i></a>
-                    <div class="dropdown-content absolute hidden text-gray-900 shadow-lg rounded-lg mt-2">
-
+                    <a href="{% url 'projects' %}" class="nav-item dropdown-toggle"><i class="fas fa-project-diagram"></i> Projects<i class="fas fa-angle-down"></i></a>
+                    <div class="dropdown-content absolute hidden text-gray-900 shadow-lg rounded-lg">
                         <a href="{% url 'projects' %} " class="block hover:bg-green-500"><i class="fas fa-caret-right"></i> Seasonal Projects</a>
                         <a href="{% url 'projects' %}" class="block hover:bg-green-500"><i class="fas fa-caret-right"></i> Past Projects</a>
                         <a href="{% url 'projects' %}" class="block hover:bg-green-500"><i class="fas fa-caret-right"></i> Sharing Projects</a>
@@ -191,19 +189,13 @@
                 <a href="{% url 'trainings' %}" class="nav-item"><i class="fas fa-graduation-cap"></i> Training</a>
             </div>
             <div class="hidden md:flex items-center space-x-4 pr-6">
-                <div class="dropdown inline-block relative">
-                    <a href="#" class="nav-item dropdown-toggle"><i class="fas fa-language"></i> Language <i class="fas fa-angle-down"></i></a>
-                    <div class="dropdown-content absolute hidden bg-gray-800 text-gray-300 shadow-lg rounded-lg mt-2">
-                        <a href="#" id="lang-toggle" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-caret-right"></i> Arabic</a>
-                        <a href="#" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-caret-right"></i> English</a>
-                    </div>
-                </div>
-                <a href="#" class="bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 transition"><i class="fas fa-donate"></i> Donate</a>
+
+                <a href="https://www.paypal.com/donate/?hosted_button_id=HWR6UTMG57JD6" class="bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 transition"><i class="fas fa-donate"></i> Donate</a>
                 {% if user.is_authenticated %}
                 <div class="dropdown inline-block relative">
                     <a href="#" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition dropdown-toggle"><i class="fas fa-user"></i> {{ user.username }} <i class="fas fa-angle-down"> </i></a>
                     <div class="dropdown-content hidden bg-gray-800 text-gray-300 shadow-lg rounded-lg mt-2">
-                        <a href="#" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-user"></i> Profile</a>
+                        <a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-user"></i> Profile</a>
                         <a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </div>
@@ -211,7 +203,7 @@
                 <a href="{% url 'login' %}" class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition"><i class="fas fa-user"></i> Login</a>
                 {% endif %}
             </div>
-            <button id="hamburger-menu" class="md:hidden focus:outline-none bg-orange-100 border text-white text-lg py-4 px-7 rounded-lg hover:bg-orange-900 transition" aria-label="Toggle mobile menu">
+            <button id="hamburger-menu" class="md:hidden focus:outline-none bg-orange-100 border text-white text-lg rounded-lg hover:bg-orange-900 transition" aria-label="Toggle mobile menu">
                 <i class="fas fa-bars"></i>
             </button>
         </nav>
@@ -222,7 +214,7 @@
         <div class="flex flex-col space-y-4">
             <a href="{% url 'index' %}" class="hover:text-green-400 transition"><i class="fas fa-home"></i> Home</a>
             <a href="{% url 'about' %}" class="hover:text-green-400 transition"><i class="fas fa-users"></i> About Us</a>
-            <div class="dropdown inline-block relative">
+            <div class="dropdown inline-block relative ">
                 <a href="#" class="hover:text-green-400 transition dropdown-toggle"><i class="fas fa-project-diagram"></i> Projects <i class="fas fa-angle-down"></i></a>
                 <div class="dropdown-content hidden bg-gray-800 text-gray-300 rounded-lg mt-2 py-2 width-full">
                     <a href="{% url 'projects' %}" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-caret-right"></i> Seasonal Projects</a>
@@ -232,58 +224,63 @@
             </div>
             <a href="{% url 'partners' %}" class="hover:text-green-400 transition"><i class="fas fa-people-carry"></i> Partners</a>
             <a href="{% url 'trainings' %}" class="hover:text-green-400 transition"><i class="fas fa-graduation-cap"></i> Training</a>
-            <div class="dropdown inline-block relative">
-                <a href="#" class="hover:text-green-400 transition dropdown-toggle"><i class="fas fa-language"></i> Language <i class="fas fa-angle-down"></i></a>
-                <div class="dropdown-content hidden bg-gray-800 text-gray-300 shadow-lg rounded-lg mt-2">
-                    <a href="#" id="lang-toggle-mobile" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-caret-right"></i> Arabic</a>
-                    <a href="#" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-caret-right"></i> English</a>
-                </div>
-            </div>
             {% if user.is_authenticated %}
             <div class="dropdown inline-block relative">
                 <a href="#" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition dropdown-toggle"><i class="fas fa-user"></i> Logout <i class="fas fa-angle-down"> </i></a>
                 <div class="dropdown-content hidden bg-gray-800 text-gray-300 rounded-lg mt-2">
-                    <a href="#" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-user"></i> Profile</a>
+                    <a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-user"></i> Profile</a>
                     <a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                </div>
+            </div>
             </div>
             {% else %}
-            <a href="{% url 'login' %}" class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition"><i class="fas fa-user"></i> Login</a>
-            {% endif %}
-            <a href="#" class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition"><i class="fas fa-donate"></i> Donate</a>
+       <a href="{% url 'login' %}" class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition w-40"><i class="fas fa-user"></i> Login</a>
+        {% endif %}
+       <a href="https://www.paypal.com/donate/?hosted_button_id=HWR6UTMG57JD6" class="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600 transition w-40"><i class="fas fa-donate"></i> Donate</a>
         </div>
     </div>
+<div class="gtranslate_wrapper"></div>
+<script>window.gtranslateSettings = {"default_language":"en","languages":["en","fr","ar"],"wrapper_selector":".gtranslate_wrapper"}</script>
+<script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
 
     <main class="pt-16">
         {% block content %}
         {% endblock %}
     </main>
 
-    <footer class="py-8 mt-10">
-        <div class="container mx-auto text-center">
-            <p>&copy; {{ current_year }} Edo. All rights reserved.</p>
-            <div class="mt-4 space-x-4">
-                <a href="#" class="hover:text-green-400 transition">Privacy Policy</a>
-                <a href="#" class="hover:text-green-400 transition">Terms of Service</a>
-            </div>
+<footer class="py-8 mt-10">
+    <div class="container mx-auto text-center">
+        <p>&copy;2025 Eda. All rights reserved.</p>
+        <div class="mt-4 space-x-4">
+            <a href="{% url 'privacy' %}" class="hover:text-green-400 transition">Privacy Policy</a>
+            <a href="{% url 'terms' %}" class="hover:text-green-400 transition">Terms of Service</a>
         </div>
-    </footer>
-
-    <div id="google_translate_element" class="hidden"></div>
+        <div class="mt-4">
+            <p>Contact us: <a href="mailto:info@eda.com" class="hover:text-green-400 transition">info@eda.com</a></p>
+        </div>
+        <div class="mt-4 space-x-4">
+            <a href="https://facebook.com" target="_blank" class="hover:text-green-400 transition">
+              <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://twitter.com" target="_blank" class="hover:text-green-400 transition">
+               <i class="fab fa-twitter-square"></i>
+            </a>
+            <a href="https://instagram.com" target="_blank" class="hover:text-green-400 transition">
+               <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://linkedin.com" target="_blank" class="hover:text-green-400 transition">
+               <i class="fab fa-linkedin"></i>
+            </a>
+             <div id="google_translate_element"></div>
+        </div>
+    </div>
+</footer>
 
     <script>
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
         }
 
-        function toggleDropdown(event) {
-            const dropdownContent = event.target.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
-        }
+
 
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobile-menu');
@@ -319,6 +316,8 @@
                 }
             }
         });
+
+
     </script>
 </body>
 </html>

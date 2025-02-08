@@ -1,5 +1,5 @@
 ﻿{% extends 'base.html' %}
-{% block title %}Login - EDO{% endblock %}
+{% block title %}Login - EDA{% endblock %}
 
 {% block content %}
 <style>
@@ -10,7 +10,7 @@
 
   .login-container {
     max-width: 400px;
-    margin: 100px auto; /* Center the container vertically */
+    margin: 30px auto; /* Center the container vertically */
     padding: 40px; /* Increased padding */
     background-color: white; /* White background for form */
     border-radius: 8px;
@@ -51,12 +51,23 @@
     color: red; /* Red color for error messages */
     margin-bottom: 15px;
     font-size: 0.9rem; /* Slightly larger font for visibility */
+    background-color: #f9f9f9; /* Light gray background for visibility */
+    padding: 10px; /* Padding for visibility */
+    border-radius: 5px; /* Rounded corners */
+  }
+  .success-message {
+    color: green; /* Green color for success messages */
+    margin-bottom: 15px;
+    font-size: 0.9rem; /* Slightly larger font for visibility */
+    background-color: #f9f9f9; /* Light gray background for visibility */
+    padding: 10px; /* Padding for visibility */
+    border-radius: 5px; /* Rounded corners */
   }
 
   .login-button {
     width: 100%;
     padding: 15px; /* Increased padding */
-    background-color: #4a90e2; /* Accent background */
+    background-color: #ba920d; /* Accent background */
     color: white;
     border: none;
     border-radius: 5px;
@@ -66,30 +77,43 @@
   }
 
   .login-button:hover {
-    background-color: #357ab8; /* Darker shade on hover */
+    background-color: #4a3a04; /* Darker shade on hover */
   }
 
   .footer {
     text-align: center;
     margin-top: 20px;
   }
+    .hero {
+     background-color: rgb(37, 35, 5);
+    color: white;
+    padding:30px 20px;
+    text-align: center;
+
+}
 
   .footer a {
     color: #4a90e2; /* Accent color */
     text-decoration: none;
   }
 </style>
+<section class="hero">
+    <div class="hero-container">
+        <h1> User Login</h1>
+    </div>
+</section>
 
 <div class="login-container">
   <h2>Login</h2>
-
-  {% if messages %}
-    <div class="error-message">
-      {% for message in messages %}
-        {{ message }}
-      {% endfor %}
-    </div>
+  {% for message in messages %}
+  {% if message.tags == 'error' %}
+  <div class="error-message">{{ message }}</div>
+  {% else %}
+  <div class="success-message">{{ message }}</div>
   {% endif %}
+  {% endfor %}
+
+
 
   <form method="POST" action="{% url 'login' %}">
     {% csrf_token %}
@@ -104,8 +128,9 @@
     <button type="submit" class="login-button">Login</button>
   </form>
   <div class="footer">
-    <p>Don't have an account? <a href="#">Sign up</a></p>
-  </div>
+    <a href="{% url 'reset_password' %}">Forgot password?</a>
+    </div>
+
 </div>
 
 {% endblock %}

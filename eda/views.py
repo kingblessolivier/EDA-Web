@@ -1,16 +1,35 @@
-from django.contrib.auth import authenticate, login, logout
+
+from datetime import datetime
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib import messages
 from.models import *
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+import json
+from django.views import View
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from .models import User
+from django.contrib.auth.hashers import make_password
 
-# Create your views here.
+
 def index(request):
-    return render(request, 'home.html')
+    projects = Project.objects.all()[:3]
+    partners = Partner.objects.all()[:4]
+    trainings = Training.objects.filter()[:3]
+    return render(request, 'home.html', {'projects': projects, 'partners': partners, 'trainings': trainings})
+
 
 
 def about(request):
-    return render(request, 'about_us.html')
+    members=Team.objects.all()
+    context = {'members': members}
+    return render(request, 'about_us.html', context)
 def training(request):
     return  render(request, 'trainings.html')
 
@@ -204,3 +223,194 @@ def edit_project(request, pk):
     else:
         return render(request, 'edit_project.html', {'project': project})
 
+
+def terms_and_conditions(request):
+    return render(request, 'terms_of_service.html')
+
+
+def privacy_policy(request):
+    return render(request, 'privacy.html')
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            messages.error(request, 'User with this email does not exist.')
+            return redirect('reset_password')
+
+        if new_password != confirm_password:
+            messages.error(request, 'New password and confirm password do not match.')
+            return redirect('reset_password')
+
+        if len(new_password) < 8:
+            messages.error(request, 'Password must be at least 8 characters long.')
+            return redirect('reset_password')
+
+        user.set_password(new_password)
+        user.save()
+        update_session_auth_hash(request, user)  # Important to update the session with the new password
+        messages.success(request, 'Your password has been successfully reset.')
+        return redirect('login')
+
+    return render(request, 'reset_password.html')
+
+
+
+
+
+# profile view
+@login_required
+def profile(request):
+    return render(request, 'profile.html')
+
+
+# ✅ 1. Retrieve All Users (JSON Response)
+class UserListView(ListView):
+    model = User
+
+    def render_to_response(self, context, **response_kwargs):
+        users = list(self.model.objects.values('id', 'username', 'email', 'first_name', 'last_name'))
+        return JsonResponse(users, safe=False)
+
+
+@login_required
+def user_detail_view(request):
+    user = request.user  # Get the currently logged-in user
+    if user.is_authenticated:
+        data = {
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+        }
+        return JsonResponse(data)
+    else:
+        return JsonResponse({"error": "User not authenticated"}, status=401)
+
+
+@login_required
+@csrf_exempt
+def delete_user(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == 'DELETE':
+        if request.user.is_superuser:
+            user.delete()
+            return JsonResponse({"message": "User deleted successfully!"})
+        return JsonResponse({"error": "You don't have permission to delete this user."}, status=403)
+    return JsonResponse({"error": "Method not allowed"}, status=405)
+
+
+# ✅ 3. Add New User (Handled via JavaScript, returns JSON)
+class UserCreateView(View):
+    def post(self, request, *args, **kwargs):
+        try:
+            data = json.loads(request.body)  # Parse JSON data from request
+            username = data.get('username')
+            email = data.get('email')
+            first_name = data.get('first_name')
+            last_name = data.get('last_name')
+            password = data.get('password')
+
+            # Check if required fields are provided
+            if not username or not password:
+                return JsonResponse({"error": "Username and password are required."}, status=400)
+
+            # Create user
+            user = User.objects.create(
+                username=username,
+                email=email,
+                first_name=first_name,
+                last_name=last_name,
+                password=make_password(password)  # Hash the password
+            )
+
+            return JsonResponse({"message": "User added successfully!", "user_id": user.id}, status=201)
+
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON format"}, status=400)
+
+
+# ✅ 4. Update User (JSON Response, handled via JavaScript)
+class UserUpdateView(UpdateView):
+    model = User
+    fields = ['username', 'email', 'first_name', 'last_name']
+
+    def form_valid(self, form):
+        user = form.save()
+        return JsonResponse({"message": "User updated successfully!"})
+
+    def form_invalid(self, form):
+        return JsonResponse({"error": form.errors}, status=400)
+
+
+# Adding team member
+@csrf_exempt
+def add_team_member(request):
+    if request.method == 'POST':
+        try:
+            name = request.POST.get('name')
+            designation = request.POST.get('designation')
+            image = request.FILES.get('image')  # Get the uploaded image
+
+            team_member = Team.objects.create(name=name, designation=designation, image=image)
+
+            return JsonResponse({'message': 'Team member added successfully'}, status=201)
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)  # Return error details
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+class TeamListView(ListView):
+    model = Team
+
+    def render_to_response(self, context, **response_kwargs):
+        member = list(self.model.objects.values('id', 'name', 'designation', 'image'))
+        return JsonResponse(member, safe=False)
+
+
+def user_detail(request, pk):  # pk comes from the URL
+    try:
+        user = User.objects.get(pk=pk)
+        data = {
+            "username": user.username,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+        }
+        return JsonResponse(data)
+    except User.DoesNotExist:
+        return JsonResponse({"error": "User not found"}, status=404)
+
+
+def customer_messages(request):
+    messages= Contact.objects.all()
+    return render(request, 'customer_messages.html', {'messages': messages})
+
+
+def delete_message(request, pk):
+    message = get_object_or_404(Contact, pk=pk)
+    if message:
+        message.delete()
+        return redirect('customer_messages')
+    return redirect('customer_messages')
+
+def add_message(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        if name and email and message:
+            contact = Contact(name=name, email=email, message=message)
+            contact.save()
+            return redirect('about')
+        else:
+            return render(request, 'about_us.html', {'error': 'All fields are required.'})
+    return render(request, 'about_us.html')

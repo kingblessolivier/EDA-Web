@@ -22,6 +22,25 @@ urlpatterns = [
     path('project/add/', views.add_project, name='add_project'),
     path('project/<int:pk>/delete/', views.delete_project, name='delete_project'),
     path('project/<int:pk>/update/', views.edit_project, name='edit_project'),
+    path('terms-and-conditions/', views.terms_and_conditions, name='terms'),
+    path('privacy-policy/', views.privacy_policy, name='privacy'),
+    path('reset-password/', views.reset_password, name='reset_password'),
 
+]
 
+urlpatterns += [
+
+    # Profile urls
+    path('profile/', views.profile, name='profile'),
+    path('users/', UserListView.as_view(), name='user-list'),
+    path('users/<int:pk>/', views.user_detail, name='user_detail'),
+    path('users/profile/', user_detail_view, name='user-detail'),
+    path('users/add/', UserCreateView.as_view(), name='user-add'),
+    path('users/update/<int:pk>/', UserUpdateView.as_view(), name='user-update'),
+    path('users/delete/<int:pk>/', delete_user, name='user-delete'),
+    path('add-team-member/', add_team_member, name='add-team-member'),
+    path('team-members/', TeamListView.as_view(), name='team-members'),
+    path('customer_messages/', views.customer_messages, name='customer_messages'),
+    path('delete_message/<int:pk>/', views.delete_message, name='delete_message'),
+    path('add_message/', views.add_message, name='add_message')
 ]

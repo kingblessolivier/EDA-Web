@@ -1,6 +1,6 @@
 ﻿{% extends 'base.html' %}
 {% load static %}
-{% block title %}Projects - Edo{% endblock %}
+{% block title %}Projects - Eda{% endblock %}
 
 {% block content %}
 <style>
@@ -26,20 +26,23 @@
         display: inline-block; /* Makes the background fit the text */
         margin: 0 auto; /* Centering the heading */
         width: fit-content; /* Fit content width */
-        border-bottom: 3px solid #007bff; /* Bottom border */
+        border-bottom: 3px solid #4a3a04; /* Bottom border */
         margin-bottom: 20px; /* Space below the heading */
         text-align: center; /* Center text */
     }
     .button {
-        background-color: #007bff; /* Blue background */
+        background-color: #ba920d; /* Blue background */
         color: white; /* White text */
         padding: 10px 20px; /* Padding for the button */
         border-radius: 5px; /* Rounded corners */
         text-decoration: none; /* No underline */
         transition: background-color 0.3s ease; /* Smooth transition */
     }
+    h2{
+        color: #4a3a04;
+    }
     .button:hover {
-        background-color: #0056b3; /* Darker blue on hover */
+        background-color: #4a3a04; /* Darker blue on hover */
     }
     .edit-button {
         background-color: #28a745; /* Green for Edit */
@@ -79,7 +82,7 @@
                         </div>
                         <div class="project-card-content">
                             <h3 class="project-card-title text-xl font-semibold mb-2">{{ project.name }}</h3>
-                            <p class="project-card-description text-gray-700 mb-4">{{ project.description }}</p>
+                            <p class="project-card-description text-gray-700 mb-4">{{ project.description|truncatechars:100 }}</p>
                             <div class="flex items-center justify-between">
                                 <a href="{% url 'project_detail' project.id %}" class="button">Read More</a>
                                 {% if user.is_authenticated %}

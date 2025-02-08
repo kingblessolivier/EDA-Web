@@ -1,8 +1,29 @@
 ﻿{% extends 'base.html' %}
 {% load static %}
+{% block title %}About Us - Eda{% endblock %}
 {% block content %}
 
 <style>
+
+    .team-member-img {
+    width: 150px; /* Fixed width */
+    height: 150px; /* Fixed height */
+    object-fit: cover; /* Ensures the image covers the area */
+    border-radius: 50%; /* Optional: makes images circular */
+  }
+    ul{
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    li{
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      }
+
 
   .hero-section h1 {
     font-size: 3.5rem;
@@ -20,7 +41,7 @@
   }
 
   .section h2 {
-    color: #333;
+    color: #f4c421;
     font-size: 2.5rem;
     margin: 40px 0 20px;
     text-align: center;
@@ -44,15 +65,18 @@
   .card h3 {
     font-size: 1.8rem;
     margin-bottom: 15px;
-    color: #4a90e2; /* Accent color */
+    color: rgba(159, 124, 6, 0.98); /* Accent color */
   }
 
-  .card p, .card ul {
+  .card p {
     font-size: 1.1rem;
     line-height: 1.6;
     color: #555;
   }
-
+.card ul{
+  list-style: circle;
+  margin-left: 30px;
+}
   .team-member {
     text-align: center;
     transition: transform 0.3s;
@@ -62,7 +86,7 @@
     width: 100%; /* Responsive image */
     border-radius: 50%; /* Circular image */
     max-width: 150px; /* Limit maximum size */
-    border: 3px solid #4a90e2; /* Accent border */
+    border: none;
   }
 
   .team-member h3 {
@@ -103,7 +127,7 @@
   }
 
   .contact-form button {
-    background-color: #4a90e2; /* Accent background */
+    background-color: #9f7c06; /* Accent background */
     color: white;
     border: none;
     padding: 12px;
@@ -114,7 +138,7 @@
   }
 
   .contact-form button:hover {
-    background-color: #357ab8; /* Darker shade on hover */
+    background-color: #4a3a04; /* Darker shade on hover */
   }
 
   /* Responsive Styles */
@@ -135,32 +159,32 @@
 
 
 <section class="section about-section">
-  <h2>Discover EDO's Mission and Values</h2>
+  <h2>Discover EDA's Mission and Values</h2>
 
   <div class="card">
     <h3>1. Introduction</h3>
-    <p>EDO (Espoir de l’Avenir) is a Non-Governmental Organization, operating in Rwanda since 2014 and officially recognized by the Rwanda Governance Board (RGB).</p>
+    <p><b>ORGANIZATION «ESPOIR DE L'AVENIR» </b>("Hope For The Future") is a Non-Governmental Organization, operating in Rwanda since 2014 and officially recognized by the RWANDA GOVERNANCE BOARD (RGB) by the final authorization No. 223/RGB/NGO/LP/04/2018.</p>
   </div>
 
   <div class="card">
     <h3>2. Our Vision</h3>
-    <p>To lead innovative initiatives that provide effective services and programs to the community.</p>
+    <p>Leadership, innovation, and performance initiative to provide services and programs to the community through a strategic system efficient and effective.</p>
   </div>
 
   <div class="card">
     <h3>3. Our Mission</h3>
-    <p>Our mission focuses on education and welfare, specifically:</p>
+    <p>The main Mission of our Organization is Education and Welfare based on:</p>
     <ul>
-      <li>Empowering youth through vocational training.</li>
-      <li>Advocating for vulnerable populations both locally and internationally.</li>
+      <li>Frame the youth in the small technical creation of employment and positive values</li>
+      <li>Study of projects for the vulnerable and advocacy inside and outside of the country for their welfare</li>
     </ul>
   </div>
 
   <div class="card">
     <h3>4. Key Initiatives</h3>
     <ul>
-      <li>Vocational training programs to create employment opportunities for youth.</li>
-      <li>Support for projects aimed at improving the welfare of vulnerable populations.</li>
+      <li>Vocational Training to the Young people and Supervision for that, help them to create different employment and adapt themselves in new situations.</li>
+      <li>Study different projects for vulnerable people and look for them who can support these projects inside and outside the country for their social welfare.</li>
     </ul>
   </div>
 
@@ -173,33 +197,34 @@
 <section id="team" class="section py-10 bg-gray-100">
   <h2 class="text-3xl font-bold mb-6 text-center">Meet Our Team</h2>
   <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+    {% for member in members %}
     <div class="team-member">
-      <img src="{% static 'images/man6.jpeg' %}" alt="Alice Johnson" class="team-member-img" />
-      <h3>Alice Johnson</h3>
-      <p>Project Manager - Expert in project execution.</p>
+      <img src="{{ member.image.url }}" alt="Alice Johnson" class="team-member-img" />
+      <h3>{{ member.name }}</h3>
+      <p>{{ member.designation }}</p>
     </div>
-    <div class="team-member">
-      <img src="{% static 'images/man2.jpeg' %}" alt="Bob Smith" class="team-member-img" />
-      <h3>Bob Smith</h3>
-      <p>Lead Developer - Specialist in web technologies.</p>
-    </div>
-    <div class="team-member">
-      <img src="{% static 'images/man1.jpeg' %}" alt="Carol White" class="team-member-img" />
-      <h3>Carol White</h3>
-      <p>Marketing Director - Drives the marketing strategy.</p>
-    </div>
-    <div class="team-member">
-      <img src="{% static 'images/man0.jpeg' %}" alt="David Brown" class="team-member-img" />
-      <h3>David Brown</h3>
-      <p>Financial Analyst - Manages project budgets.</p>
-    </div>
+
+    {% empty %}
+    <p>No members found.</p>
+
   </div>
+  {% endfor %}
+
 </section>
 
 <section class="section contact-section">
   <h2>Contact Us</h2>
   <div class="card">
-    <form class="contact-form">
+    <form class="contact-form" method="POST" action="{% url 'add_message' %}">
+      {% csrf_token %}
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li> {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+
+        {% endfor %}
+        {% endif %}
+        </ul>
       <input type="text" name="name" placeholder="Your Name" required>
       <input type="email" name="email" placeholder="Your Email" required>
       <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
