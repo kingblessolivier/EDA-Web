@@ -42,7 +42,6 @@
                 `;
                 profileData.appendChild(fullNameDiv);
 
-                // Username
                 let usernameDiv = document.createElement('div');
                 usernameDiv.innerHTML = `
                     <label class="block text-sm font-medium text-gray-700">Username</label>
@@ -91,7 +90,7 @@
                             let memberInfo = document.createElement('div');
                             memberInfo.className = "flex-grow";
                             memberInfo.innerHTML = `
-                                <img src="${ member.image.url || 'https://via.placeholder.com/40x40' }" alt="${member.name}" class="w-10 h-10 rounded-full mr-4">
+                                <img src="/static/images/Team-Avatar.png" alt="${member.name}" class="w-10 h-10 rounded-full mr-4">
                                 <span class="font-medium">${member.name}</span>
                                 <span class="text-gray-500 ml-2">${member.designation}</span>
                             `;
@@ -100,17 +99,17 @@
                             let buttonContainer = document.createElement('div');
                             buttonContainer.className = "flex space-x-2"; // Space between buttons
 
-                            let editButton = document.createElement('button');
-                            editButton.className = "text-blue-500 hover:text-green-500";
-                            editButton.innerHTML = '<i class="fas fa-edit"></i>'; // Edit Icon
-                            editButton.onclick = () => editTeamMember(member.id);
+                            //let editButton = document.createElement('button');
+                            //editButton.className = "text-blue-500 hover:text-green-500";
+                            //editButton.innerHTML = '<i class="fas fa-edit"></i>'; // Edit Icon
+                            //editButton.onclick = () => editTeamMember(member.id);
 
                             let deleteButton = document.createElement('button');
                             deleteButton.className = "text-red-500 hover:text-red-700";
                             deleteButton.innerHTML = '<i class="fas fa-trash"></i>'; // Delete Icon
                             deleteButton.onclick = () => deleteTeamMember(member.id);
 
-                            buttonContainer.appendChild(editButton);
+                           // buttonContainer.appendChild(editButton);
                             buttonContainer.appendChild(deleteButton);
 
                             li.appendChild(memberInfo);
@@ -161,17 +160,13 @@
                   let buttonContainer = document.createElement('div');
                   buttonContainer.className = "flex space-x-2"; // Space between buttons
 
-                  let editButton = document.createElement('button');
-                  editButton.className = "text-blue-500 hover:text-green-500";
-                  editButton.innerHTML = '<i class="fas fa-edit"></i>'; // Edit Icon
-                  editButton.onclick = () => editUser(user.id);
-
+                 
                   let deleteButton = document.createElement('button');
                   deleteButton.className = "text-red-500 hover:text-red-700";
                   deleteButton.innerHTML = '<i class="fas fa-trash"></i>'; // Delete Icon
                   deleteButton.onclick = () => deleteUser(user.id);
 
-                  buttonContainer.appendChild(editButton);
+                  
                   buttonContainer.appendChild(deleteButton);
 
                   li.appendChild(userInfo);
@@ -198,9 +193,10 @@
       </button>
   </div>
 
+  </div>
+
 </section>
 
-<!-- Modals -->
 
 <!-- Delete User Modal -->
 <div id="deleteUserModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -489,5 +485,7 @@
             }
         });
     }
+
+
 </script>
 {% endblock %}

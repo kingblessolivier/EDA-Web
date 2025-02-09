@@ -39,6 +39,7 @@ urlpatterns += [
     path('users/update/<int:pk>/', UserUpdateView.as_view(), name='user-update'),
     path('users/delete/<int:pk>/', delete_user, name='user-delete'),
     path('add-team-member/', add_team_member, name='add-team-member'),
+    path('team-members/delete/<int:pk>/', delete_team_member, name='team-member-delete'),
     path('team-members/', TeamListView.as_view(), name='team-members'),
     path('customer_messages/', views.customer_messages, name='customer_messages'),
     path('delete_message/<int:pk>/', views.delete_message, name='delete_message'),

@@ -414,3 +414,15 @@ def add_message(request):
         else:
             return render(request, 'about_us.html', {'error': 'All fields are required.'})
     return render(request, 'about_us.html')
+
+
+@csrf_exempt
+@login_required
+def delete_team_member(request, pk):
+    member = get_object_or_404(Team, pk=pk)
+    if request.method == 'DELETE':
+        if request.user.is_superuser:
+            member.delete()
+            return JsonResponse({"message": "Team member deleted successfully!"})
+        return JsonResponse({"error": "You don't have permission to delete this team member."}, status=403)
+    return JsonResponse({"error": "Method not allowed"}, status=405)
