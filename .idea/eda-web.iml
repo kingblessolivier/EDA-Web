@@ -7,5 +7,6 @@
     <orderEntry type="library" name="tailwindcss" level="application" />
     <orderEntry type="library" name="tailwindcss" level="application" />
     <orderEntry type="library" name="sweetalert2" level="application" />
+    <orderEntry type="library" name="swiper" level="application" />
   </component>
 </module>

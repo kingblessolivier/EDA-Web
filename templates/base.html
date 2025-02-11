@@ -5,10 +5,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <link rel="icon" href="/static/images/eda_logoo.png" type="image/x-icon" />
     <title>
 
-        {% block title %} Espoir de l’Avenir{% endblock %}</title>
-    <link rel="icon" type="image/png" href="/static/images/eda_logo.png">
+        {% block title %} Espoir de l’Avenir{% endblock %}
+
+    </title>
+
+
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
@@ -19,10 +23,17 @@
         }
          .dropdown:hover .dropdown-content {
             display: block;
+
+
+        }
+          .dropdowns:hover .dropdown-content {
+            display: block;
+
+
         }
         /* Color Variables */
         :root {
-            --primary-color: #4a3a04; /* Dark Blue */
+            --primary-color: rgb(74, 58, 4); /* Dark Blue */
             --accent-color: rgba(250, 233, 9, 0.91); /* Bright Yellow */
             --background-color: rgba(248, 248, 248, 0.8); /* Light Background */
             --dark-background: rgba(47, 79, 78, 0.04); /* Dark Background */
@@ -31,17 +42,19 @@
         #hamburger-menu i{
              padding: 10px 20px;
             border-radius: 5px;
-            background-color: var(--primary-color); /* Dark Blue */
-            color: #fff9f9; /* Dark Blue */
+            background-color: rgba(74, 58, 4, 0.4); /* Dark Blue */
+            color: rgb(255, 249, 249); /* Dark Blue */
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 4px rgb(74, 58, 4);
+            transition: background-color 0.3s;
+
 
         }
 
 
         * {
             box-sizing: border-box;
-            font-family: 'Open Sans', sans-serif;
+            font-family: arial, sans-serif;
             font-size: 14px;
         }
 
@@ -71,41 +84,54 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 40px;
-            box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 3px 2px 4px rgb(74, 58, 4);
         }
 
-
-        .nav-item , .dropdown {
+        .nav-item  , .dropdowns {
             cursor: pointer;
-            padding: 10px;
+            padding: 15px 10px ;
+            transition: background-color 0.6s;
+            margin-left: 0;
+            color: #fff9f9; /* Dark Blue */
+            border-radius: 5px;
         }
+
+
+
 
         .nav-item:hover {
-            color: #e1f8f2; /* Green */
             border-radius: 5px;
-            background-color: rgba(255, 255, 0, 0.06); /* Light Yellow */
-            border-bottom-color: rgba(255, 255, 0, 0.06);
+            color: #19bc91; /* Green */
+            background-color: rgba(255, 255, 0, 0.15); /* Light Yellow */
+            transition: background-color 0.6s;
+
+
+
         }
 
         .dropdown-content {
             background-color: var(--primary-color); /* Dark Blue for dropdown */
-            border-radius: 0.5rem;
             position: absolute;
-            margin-top: -5px;
-            padding: 0.5rem;
+            margin-top: 0;
+            padding: 0;
             width: 150px;
+            height: auto;
             top: 100%;
             left: 0;
             right: 0;
             z-index: 1;
-            display: none; /* Hidden by default */
+            display: none;
+            transition: opacity 0.3s ease;
+
 
         }
 
         .dropdown-content a {
             color: #FFFFFF; /* White text */
-            padding: 0.5rem;
+            padding: 1rem;
             transition: background-color 0.3s;
+            font-size: 13px;
+            border-bottom: 1px solid #ba920d;
         }
 
         .dropdown-content a:hover {
@@ -127,7 +153,9 @@
         @media (max-width: 768px) {
             #navbar {
                 padding: 0 20px;
+
             }
+
             .hero-title {
                 font-size: 2rem;
             }
@@ -135,7 +163,16 @@
                 font-size: 1rem;
                 padding: 10px 20px;
             }
+            .dropdown a{
+                margin-left: 0;
+                margin-right: 0;
+
+            }
+
+
+
         }
+
 
         @media (max-width: 480px) {
             #navbar {
@@ -148,9 +185,12 @@
                 font-size: 0.9rem;
                 padding: 8px 16px;
             }
-        }
+               .dropdown a{
+                margin-left: 0;
+                margin-right: 0;
 
-        /* Fixed Mobile Navbar */
+            }
+        }
         #mobile-menu {
             position: fixed;
             top: 88px; /* Adjusted to match navbar height */
@@ -160,9 +200,10 @@
             padding: 10px;
             background-color: var(--primary-color); /* Dark Blue for mobile menu */
             transition: transform 0.3s ease;
+
         }
 
-        /* Hide mobile menu by default */
+
         #mobile-menu.hidden {
             transform: translateY(-100%);
         }
@@ -170,19 +211,19 @@
 </head>
 <body>
     <header>
-        <nav id="navbar" class="flex justify-between items-center p-0  fixed w-full z-10 transition">
+        <nav id="navbar" class="flex justify-between items-center p-0  fixed w-full transition">
             <div class="flex justify-center flex-grow">
-                <a href="{% url 'index' %}"><img src="{% static 'images/eda_logo.png' %}" alt="Eda Logo" class="w-20 rounded-full"/></a>
+                <a href="{% url 'index' %}"><img src="{% static 'images/eda_logoo.png' %}" alt="Eda Logo" class="w-20 rounded-full mr-4 ml-0" /></a>
             </div>
             <div class="hidden md:flex flex-grow justify-center space-x-8 font-bold">
                 <a href="{% url 'index' %}" class="nav-item"><i class="fas fa-home"></i> Home</a>
                 <a href="{% url 'about' %}" class="nav-item"><i class="fas fa-users"></i> About Us</a>
-                <div class="dropdown inline-block relative">
-                    <a href="{% url 'projects' %}" class="nav-item dropdown-toggle"><i class="fas fa-project-diagram"></i> Projects<i class="fas fa-angle-down"></i></a>
-                    <div class="dropdown-content absolute hidden text-gray-900 shadow-lg rounded-lg">
-                        <a href="{% url 'projects' %} " class="block hover:bg-green-500"><i class="fas fa-caret-right"></i> Seasonal Projects</a>
-                        <a href="{% url 'projects' %}" class="block hover:bg-green-500"><i class="fas fa-caret-right"></i> Past Projects</a>
-                        <a href="{% url 'projects' %}" class="block hover:bg-green-500"><i class="fas fa-caret-right"></i> Sharing Projects</a>
+                <div class="dropdowns inline-block relative">
+                    <a href="{% url 'projects' %}" class="nav-item dropdown-toggle"><i class="fas fa-hands-helping"></i> Projects <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content absolute hidden text-gray-900 shadow-lg ">
+                        <a href="{% url 'projects' %} " class="block hover:bg-green-500"> Seasonal Projects</a>
+                        <a href="{% url 'projects' %}" class="block hover:bg-green-500"> Past Projects</a>
+                        <a href="{% url 'projects' %}" class="block hover:bg-green-500"> Sharing Projects</a>
                     </div>
                 </div>
                 <a href="{% url 'partners' %}" class="nav-item"><i class="fas fa-people-carry"></i> Partners</a>
@@ -192,7 +233,7 @@
 
                 <a href="https://www.paypal.com/donate/?hosted_button_id=HWR6UTMG57JD6" class="bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 transition"><i class="fas fa-donate"></i> Donate</a>
                 {% if user.is_authenticated %}
-                <div class="dropdown inline-block relative">
+                <div class="dropdowns inline-block relative">
                     <a href="#" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition dropdown-toggle"><i class="fas fa-user"></i> {{ user.username }} <i class="fas fa-angle-down"> </i></a>
                     <div class="dropdown-content hidden bg-gray-800 text-gray-300 shadow-lg rounded-lg mt-2">
                         <a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-user"></i> Profile</a>
@@ -211,18 +252,18 @@
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-gray-800 text-white z-20 p-6 shadow-lg">
-        <div class="flex flex-col space-y-4">
-            <a href="{% url 'index' %}" class="hover:text-green-400 transition"><i class="fas fa-home"></i> Home</a>
+        <div class="flex flex-col space-y-4 font-bold">
+            <a href="{% url 'index' %}" class="hover:text-green-400  transition"><i class="fas fa-home"></i> Home</a>
             <a href="{% url 'about' %}" class="hover:text-green-400 transition"><i class="fas fa-users"></i> About Us</a>
-            <div class="dropdown inline-block relative ">
-                <a href="#" class="hover:text-green-400 transition dropdown-toggle"><i class="fas fa-project-diagram"></i> Projects <i class="fas fa-angle-down"></i></a>
-                <div class="dropdown-content hidden bg-gray-800 text-gray-300 rounded-lg mt-2 py-2 width-full">
-                    <a href="{% url 'projects' %}" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-caret-right"></i> Seasonal Projects</a>
-                    <a href="{% url 'projects' %}" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-caret-right"></i> Past Projects</a>
-                    <a href="{% url 'projects' %}" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-caret-right"></i> Sharing Projects</a>
-                </div>
-            </div>
-            <a href="{% url 'partners' %}" class="hover:text-green-400 transition"><i class="fas fa-people-carry"></i> Partners</a>
+            <div class="dropdown inline-block relative">
+    <a href="#" class="hover:text-green-400 transition dropdown-toggle"><i class="fas fa-hands-helping"></i> Projects <i class="fas fa-caret-down"></i></a>
+    <div class="dropdown-content hidden bg-gray-800 text-gray-300 rounded-lg mt-2" style="left: 0; right: 0">
+        <a href="{% url 'projects' %}" class="block px-4 py-2 hover:bg-green-400 transition">Seasonal Projects</a>
+        <a href="{% url 'projects' %}" class="block px-4 py-2 hover:bg-green-400 transition">Past Projects</a>
+        <a href="{% url 'projects' %}" class="block px-4 py-2 hover:bg-green-400 transition">Sharing Projects</a>
+    </div>
+</div>
+            <a href="{% url 'partners' %}" class="hover:text-green-400  transition"><i class="fas fa-people-carry"></i> Partners</a>
             <a href="{% url 'trainings' %}" class="hover:text-green-400 transition"><i class="fas fa-graduation-cap"></i> Training</a>
             {% if user.is_authenticated %}
             <div class="dropdown inline-block relative">

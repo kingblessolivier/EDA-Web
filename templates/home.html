@@ -3,19 +3,96 @@
 {% load static %}
 {% block content %}
 
+
 <style>
-    .about-section h2 {
-        color: rgba(223, 208, 10, 0.8);
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+    }
+
+    .impact-section, .about-section, .comprehensive-training-section, #partners {
+        padding: 60px 20px;
+        text-align: center;
+    }
+    .gallery-item img {
+    transition: transform 0.3s;
+}
+    .gallery-item {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6); /* Darker background for better contrast */
+    color: white;
+    text-align: center;
+    border-radius: 0.5rem; /* Matches rounded corners of images */
+    opacity: 0; /* Start hidden */
+    transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+.gallery-item:hover .overlay {
+    opacity: 1; /* Show on hover */
+}
+
+.group:hover img {
+    transform: scale(1.05); /* Scale image slightly on hover */
+}
+
+.gallery-item img:hover {
+    transform: scale(1.05);
+}
+
+    .impact-section {
+        background-color: #fff9f9;
+        color: rgba(0, 0, 0, 0.52);
+    }
+
+    .impact-item {
+        border: none;
+        border-radius: 8px;
+        margin: 10px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .impact-item:hover {
+        background-color: rgba(255, 204, 0, 0.1);
+        transform: translateY(-5px);
+    }
+
+    .about-section h2, .comprehensive-training-section h2, #partners h2,.impact-item h3 {
+        color: #FFB600;
         font-size: 3rem;
+        font-weight: bold;
         padding-bottom: 10px;
         margin: 0 auto;
+        transition: color 0.3s ease;
+    }
+
+    .about-section h2:hover, .comprehensive-training-section h2:hover, #partners h2:hover {
+        color: #FFD700;
+    }
+
+    .highlight {
+        color: #FFB600;
         font-weight: bold;
     }
+
     .about-section h4 {
         color: rgb(159, 124, 6);
         font-size: 1.5rem;
         font-weight: bold;
     }
+
     .about-section p {
         color: rgba(0, 0, 0, 0.52);
         font-size: 1.2rem;
@@ -24,61 +101,13 @@
         line-height: 1.5;
     }
 
-    .section {
-        padding: 40px 20px;
-        text-align: center;
-    }
-
-    .comprehensive-training-section h2 {
-        color: rgba(159, 124, 6, 0.98);
-        font-size: 3rem;
-        padding-bottom: 10px;
-        margin: 0 auto;
-        font-weight: bold;
-    }
-
-    .training-title {
-        text-align: left;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    .training-description {
-        text-align: right;
-        margin-bottom: 20px;
-    }
-
-    .training-title, .training-description {
-        display: flex;
-        color: #0612a3;
-        justify-content: space-between;
-    }
-
-    .training-item a {
-        color: #978f1b;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 1.2rem;
-        padding: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s, color 0.3s;
-    }
-
-    .training-item a:hover {
-        background-color: #4a3a04;
-        color: white;
-        border-radius: 5px;
-        text-decoration: none;
-    }
-
     .training-container {
         display: flex;
         justify-content: space-between;
         margin-top: 20px;
         margin-bottom: 20px;
         padding: 20px;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
     }
 
     .training-item {
@@ -91,45 +120,48 @@
         padding: 20px;
         border-radius: 8px;
         flex: 1;
-        margin: 0 10px;
+        margin: 10px;
         text-align: center;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .training-item:hover {
+        transform: translateY(-5px);
+        background-color: rgba(255, 255, 255, 0.1);
     }
 
     .comprehensive-training-section {
-        padding: 40px 20px;
         background-color: #1a1a1a;
         color: white;
-    }
-
-    .impact-section h2 {
-        color: rgba(159, 124, 6, 0.98);
-        font-size: 3rem;
-    }
-
-    #partners h2 {
-        color: rgba(159, 124, 6, 0.98);
-        font-size: 3rem;
     }
 
     .hero-section {
         height: 80vh;
         background-size: cover;
         background-position: center;
-        animation: changeBackground 120s linear infinite;
+        animation: changeBackground 20s normal infinite;
+        background-image: url('/static/images/hero_image.jpg');
+         z-index: 1;
+  will-change: background;
     }
 
     @keyframes changeBackground {
-        0% { background-image: url('/static/images/hero_image.jpg'); }
+        0%{ background-image: url('/static/images/hero_image.jpg'); }
         35% { background-image: url('/static/images/postive.png'); }
-        80% { background-image: url('/static/images/vist.png'); }
-        100% { background-image: url('/static/images/hero_image.jpg'); }
+        75% { background-image: url('/static/images/vist.png'); }
+       100% { background-image: url('/static/images/hero_image.jpg'); }
     }
 
     .hero-title {
         color: var(--accent-color);
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         font-size: 2.5rem;
+        transition: transform 0.3s ease;
+    }
+
+    .hero-title:hover {
+        transform: scale(1.05);
     }
 
     .hero-button {
@@ -140,25 +172,12 @@
         padding: 12px 24px;
         border-radius: 0.5rem;
         margin: 10px;
-        transition: background-color 0.3s;
+        transition: background-color 0.3s, transform 0.3s;
     }
 
     .hero-button:hover {
         background-color: #4a3a04;
-    }
-
-    .impact-section {
-        background-color: var(--dark-background);
-        color: rgba(0, 0, 0, 0.52);
-        padding: 40px 20px;
-        margin-bottom: 0;
-    }
-
-    .impact-item {
-        padding: 20px;
-        border: none;
-        border-radius: 8px;
-        margin: 10px;
+        transform: translateY(-2px);
     }
 
     .testimonial {
@@ -166,11 +185,21 @@
         padding: 20px;
         background-color: rgba(255, 204, 0, 0.1);
         border-radius: 8px;
+        transition: transform 0.3s;
+    }
+
+    .testimonial:hover {
+        transform: scale(1.02);
     }
 
     .number {
         font-size: 4rem;
         font-weight: bold;
+        transition: color 0.3s;
+    }
+
+    .number:hover {
+        color: #FFB600;
     }
 
     .team-member img {
@@ -178,6 +207,11 @@
         width: 150px;
         height: 150px;
         object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+    .team-member img:hover {
+        transform: scale(1.1);
     }
 
     .carousel {
@@ -197,6 +231,11 @@
         flex: 0 0 auto;
         margin: 0 10px;
         text-align: center;
+        transition: transform 0.3s;
+    }
+
+    .carousel-item:hover {
+        transform: scale(1.05);
     }
 
     .carousel-item img {
@@ -205,6 +244,16 @@
         border-radius: 50%;
         object-fit: cover;
         margin-bottom: 10px;
+    }
+
+    .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     @media (max-width: 768px) {
@@ -271,12 +320,17 @@
     </div>
 </header>
 
-<section class="section about-section">
-    <h2>EDA «ESPOIR DE L'AVENIR» </h2>
-    <h4>«Together for our better future»</h4>
-    <p>
-        ORGANIZATION «ESPOIR DE L'AVENIR» ("Hope For The Future") is a Non-Governmental Organization, operating in Rwanda since 2014 and officially recognized by the RWANDA GOVERNANCE BOARD (RGB) by the final authorization No. 223/RGB/NGO/LP/04/2018.
-    </p>
+<section class="about-section">
+    <div class="mx-auto bg-white rounded-lg shadow-lg p-10 flex flex-col md:flex-row">
+        <div class="md:w-1/2">
+            <h2 class="text-2xl font-bold mb-4 highlight">What is EDA?</h2>
+            <p class="mb-6 text-success"><b class="highlight">ORGANIZATION «ESPOIR DE L'AVENIR» ("Hope For The Future")</b> is a Non-Governmental Organization, operating in Rwanda since 2014 and officially recognized by the RWANDA GOVERNANCE BOARD (RGB) by the final authorization No. 223/RGB/NGO/LP/04/2018.</p>
+        </div>
+        <div class="md:w-1/2 flex flex-col justify-center p-4">
+            <h2 class="text-2xl font-bold mb-4 highlight">Our Vision</h2>
+            <p class="mb-6"><span class="highlight">Leadership, innovation, and performance</span> initiative to provide services and programs to the community through a strategic system efficient and effective.</p>
+        </div>
+    </div>
 </section>
 
 <section class="section comprehensive-training-section">
@@ -285,25 +339,24 @@
     </div>
     <p>EDA offers a variety of training programs designed to empower individuals with essential skills and knowledge. Our programs are tailored to meet the needs of diverse communities, focusing on personal development and vocational training. Participants will benefit from expert guidance, practical experience, and a supportive learning environment. Join us to enhance your skills and make a difference.</p>
     <div class="training-container">
-    {% for training in trainings %}
-        <div class="training-item">
-            <h3>{{training.name}}</h3>
-            <p>{{training.description}}</p>
-            <a href="{% url 'training_detail' training.id %}" class="cta-button">Learn More</a>
-        </div>
-    {% endfor %}
+        {% for training in trainings %}
+            <div class="training-item">
+                <h3>{{training.name}}</h3>
+                <p>{{training.description}}</p>
+                <a href="{% url 'training_detail' training.id %}" class="cta-button">Learn More</a>
+            </div>
+        {% endfor %}
     </div>
 </section>
 
 <section id="partners" class="py-10">
     <div class="container mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-6 ">Our Partners</h2>
+        <h2 class="text-3xl font-bold mb-6">Our Partners</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             {% for partner in partners %}
             <div class="partner-item">
                 <img src="{{ partner.image.url }}" alt="Partner Company A" class="w-full h-auto rounded-lg shadow-md" />
-                <p class="mt-2 font-semibold">{{partner.name}}</p>
-                <p class="text-sm">{{partner.description}}</p>
+
             </div>
             {% endfor %}
         </div>
@@ -311,27 +364,48 @@
 </section>
 
 <section class="impact-section">
-    <h2 class="text-center text-primary text-3xl py-4">Our Impact</h2>
-    <p>EDA has been making a significant difference in communities through various projects and initiatives.</p>
-    <div class="training-container">
-        <div class="impact-item">
-            <h3 class="number" data-target="5000">0</h3>
-            <p><i class="fas fa-users"></i> Families Supported</p>
-        </div>
-        <div class="impact-item">
-            <h3 class="number" data-target="200">0</h3>
-            <p><i class="fas fa-home"></i> Projects Completed</p>
-        </div>
-        <div class="impact-item">
-            <h3 class="number" data-target="100">0</h3>
-            <p><i class="fas fa-handshake"></i> Satisfaction Rate</p>
+    <div class="fade-in">
+        <h2 class="text-center text-primary font-bold text-3xl py-4 highlight">Our Impact</h2>
+        <p class="py-4 text-gray-700 text-lg mt-4">EDA has been making a significant difference in communities through various projects and initiatives.</p>
+        <div class="training-container">
+            <div class="impact-item">
+                <h3 class="number" data-target="5000">0</h3>
+                <p><i class="fas fa-users"></i> Families Supported</p>
+            </div>
+            <div class="impact-item">
+                <h3 class="number" data-target="200">0</h3>
+                <p><i class="fas fa-home"></i> Projects Completed</p>
+            </div>
+            <div class="impact-item">
+                <h3 class="number" data-target="100">0</h3>
+                <p><i class="fas fa-handshake"></i> Satisfaction Rate</p>
+            </div>
+            <div class="impact-item">
+                <h3 class="number" data-target="1000">0</h3>
+                <p><i class="fas fa-user-graduate"></i> Graduates</p>
+            </div>
         </div>
     </div>
 </section>
-
+<section class="gallery-section py-10">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6 highlight">Latest Trainings and Events EDA Gallery</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {% for image in images %}
+            <div class="gallery-item relative">
+                <img src="{{ image.image.url }}" alt="{{ image.name }}" class="w-full h-48 object-cover rounded-lg shadow-md" />
+                <div class="overlay absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg rounded-lg opacity-0 hover:opacity-100 transition-opacity duration-300">
+                    {{ image.name }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const numbers = document.querySelectorAll('.number');
+        const fadeIns = document.querySelectorAll('.fade-in');
 
         const animateNumber = (element, target) => {
             let count = 0;
@@ -353,10 +427,17 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                    // Animate numbers
                     numbers.forEach(number => {
                         const target = +number.getAttribute('data-target');
                         animateNumber(number, target);
                     });
+
+                    // Add fade-in effect
+                    fadeIns.forEach(fadeIn => {
+                        fadeIn.classList.add('visible');
+                    });
+
                     observer.disconnect();
                 }
             });

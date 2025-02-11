@@ -1,0 +1,161 @@
+﻿{% extends 'base.html' %}
+
+{% load static %}
+
+<!-- Include Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+        color: #343a40;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #4a3a04;
+        text-align: center;
+    }
+
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.2s;
+    }
+
+    .card:hover {
+        transform: scale(1.02);
+    }
+
+    .card-header {
+        background-color: #4a3a04;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .btn {
+        border-radius: 8px;
+        font-size: 1.1rem;
+        padding: 10px;
+        transition: background-color 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-primary {
+        background-color: #4a3a04;
+        border-color: #4a3a04;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #978f1b;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    .text-muted {
+        color: #6c757d;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 200px; /* Adjust height as needed */
+        object-fit: cover; /* Ensures aspect ratio is maintained */
+    }
+
+    /* Flexbox for responsive grid */
+    .card-columns {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .card {
+        flex: 0 0 calc(33.333% - 20px); /* Three cards per row with space */
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .card {
+            flex: 0 0 calc(50% - 20px); /* Two cards per row on medium screens */
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card {
+            flex: 0 0 100%; /* One card per row on small screens */
+        }
+    }
+
+    .btn i {
+        margin-right: 5px; /* Space between icon and button text */
+    }
+</style>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Image Gallery</h1>
+
+    <!-- Button to Add New Image -->
+    <div class="mb-3 text-right">
+        <a href="{% url 'add_gallery' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add New Image
+        </a>
+    </div>
+
+    <div class="card-columns">
+        {% for item in galleries %}
+        <div class="card">
+            {% if item.image %}
+            <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+            {% endif %}
+            <div class="card-header">
+                {{ item.name }}
+            </div>
+            <div class="card-body">
+                <p class="card-text">Uploaded on {{ item.created_at|date:"F j, Y" }}</p>
+                <div class="text-center">
+                    <a href="{% url 'edit_gallery' item.id %}" class="btn btn-warning">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <form action="#" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

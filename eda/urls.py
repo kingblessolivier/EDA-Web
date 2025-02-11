@@ -1,5 +1,6 @@
 ﻿from django.urls import path
 from. import views
+from django.conf.urls import handler404, handler500
 from .views import training_detail
 from .views import *
 
@@ -43,5 +44,12 @@ urlpatterns += [
     path('team-members/', TeamListView.as_view(), name='team-members'),
     path('customer_messages/', views.customer_messages, name='customer_messages'),
     path('delete_message/<int:pk>/', views.delete_message, name='delete_message'),
-    path('add_message/', views.add_message, name='add_message')
+    path('add_message/', views.add_message, name='add_message'),
+    path('add_gallery/', views.add_gallery, name='add_gallery'),
+    path('delete_gallery/<int:pk>/', views.delete_gallery, name='delete_gallery'),
+    path('gallery/', views.galleryView, name='gallery'),
+    path('edit_gallery/<int:pk>/', views.edit_gallery, name='edit_gallery')
 ]
+
+handler404 = views.custom_404_view
+handler500 = views.custom_500_view

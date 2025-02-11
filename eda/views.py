@@ -22,7 +22,8 @@ def index(request):
     projects = Project.objects.all()[:3]
     partners = Partner.objects.all()[:4]
     trainings = Training.objects.filter()[:3]
-    return render(request, 'home.html', {'projects': projects, 'partners': partners, 'trainings': trainings})
+    images=gallery.objects.all()
+    return render(request, 'home.html', {'projects': projects, 'partners': partners, 'trainings': trainings, 'images':images})
 
 
 
@@ -426,3 +427,50 @@ def delete_team_member(request, pk):
             return JsonResponse({"message": "Team member deleted successfully!"})
         return JsonResponse({"error": "You don't have permission to delete this team member."}, status=403)
     return JsonResponse({"error": "Method not allowed"}, status=405)
+
+
+
+def custom_404_view(request, exception):
+    return render(request, '404.html', status=404)
+
+def custom_500_view(request):
+    return render(request, '500.html', status=500)
+
+
+def add_gallery(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        image = request.FILES.get('image')
+
+        if name and image:
+            gallery.objects.create(name=name, image=image)
+            return redirect('gallery')  # Redirect to the gallery page or wherever you like
+
+    return render(request, 'add_image.html')
+
+
+def delete_gallery(request, pk):
+    galler = get_object_or_404(gallery, pk=pk)
+    if galler:
+        galler.delete()
+        return redirect('gallery')
+    return redirect('gallery')
+
+
+def galleryView(request):
+    galleries = gallery.objects.all()
+    return render(request, 'gallery.html', {'galleries': galleries})
+
+
+def edit_gallery(request, pk):
+    galle = get_object_or_404(gallery, pk=pk)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        image = request.FILES.get('image')
+        if name and image:
+            galle.name = name
+            galle.image = image
+            galle.save()
+            return redirect('gallery')
+        return render(request, 'edit_galler.html', {'galle': galle})
+    return render(request, 'edit_galley.html', {'galle': galle})
