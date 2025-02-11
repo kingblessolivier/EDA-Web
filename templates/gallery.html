@@ -145,7 +145,7 @@
                     <a href="{% url 'edit_gallery' item.id %}" class="btn btn-warning">
                         <i class="fas fa-edit"></i> Edit
                     </a>
-                    <form action="#" method="post" style="display:inline;">
+                    <form action="{% url 'delete_gallery' item.id %}" method="post" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger">
                             <i class="fas fa-trash-alt"></i> Delete

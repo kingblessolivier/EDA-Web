@@ -12,6 +12,7 @@
 
     </title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
@@ -67,8 +68,14 @@
 
         ::-webkit-scrollbar {
             width: 10px;
-            background-color: #F5F5F5; /* Light Gray */
-            display: none;
+            background-color: rgb(156, 149, 57); /* Light Gray */
+            border-radius: 10px;
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #4a3a04;
+            border-radius: 10px;
         }
 
         #navbar {
@@ -216,18 +223,19 @@
                 <a href="{% url 'index' %}"><img src="{% static 'images/eda_logoo.png' %}" alt="Eda Logo" class="w-20 rounded-full mr-4 ml-0" /></a>
             </div>
             <div class="hidden md:flex flex-grow justify-center space-x-8 font-bold">
-                <a href="{% url 'index' %}" class="nav-item"><i class="fas fa-home"></i> Home</a>
-                <a href="{% url 'about' %}" class="nav-item"><i class="fas fa-users"></i> About Us</a>
+                <a href="{% url 'index' %}" class="nav-item"> <i class="fas fa-home"></i> Home</a>
+                <a href="{% url 'about' %}" class="nav-item"> <i class="fas fa-users"></i> About Us</a>
                 <div class="dropdowns inline-block relative">
-                    <a href="{% url 'projects' %}" class="nav-item dropdown-toggle"><i class="fas fa-hands-helping"></i> Projects <i class="fas fa-caret-down"></i></a>
+                    <a href="{% url 'projects' %}" class="nav-item dropdown-toggle"><i class="fas fa-tasks"></i> Projects <i class="fas fa-caret-down"></i></a>
                     <div class="dropdown-content absolute hidden text-gray-900 shadow-lg ">
                         <a href="{% url 'projects' %} " class="block hover:bg-green-500"> Seasonal Projects</a>
                         <a href="{% url 'projects' %}" class="block hover:bg-green-500"> Past Projects</a>
                         <a href="{% url 'projects' %}" class="block hover:bg-green-500"> Sharing Projects</a>
                     </div>
                 </div>
-                <a href="{% url 'partners' %}" class="nav-item"><i class="fas fa-people-carry"></i> Partners</a>
+                <a href="{% url 'partners' %}" class="nav-item"><i class="fas fa-handshake"></i> Partners</a>
                 <a href="{% url 'trainings' %}" class="nav-item"><i class="fas fa-graduation-cap"></i> Training</a>
+                  <a href="#" class="nav-item"><i class="fas fa-book"></i> Programs</a>
             </div>
             <div class="hidden md:flex items-center space-x-4 pr-6">
 
@@ -256,7 +264,7 @@
             <a href="{% url 'index' %}" class="hover:text-green-400  transition"><i class="fas fa-home"></i> Home</a>
             <a href="{% url 'about' %}" class="hover:text-green-400 transition"><i class="fas fa-users"></i> About Us</a>
             <div class="dropdown inline-block relative">
-    <a href="#" class="hover:text-green-400 transition dropdown-toggle"><i class="fas fa-hands-helping"></i> Projects <i class="fas fa-caret-down"></i></a>
+    <a href="#" class="hover:text-green-400 transition dropdown-toggle"><i class="fas fa-hands-helping"></i>Projects <i class="fas fa-caret-down"></i></a>
     <div class="dropdown-content hidden bg-gray-800 text-gray-300 rounded-lg mt-2" style="left: 0; right: 0">
         <a href="{% url 'projects' %}" class="block px-4 py-2 hover:bg-green-400 transition">Seasonal Projects</a>
         <a href="{% url 'projects' %}" class="block px-4 py-2 hover:bg-green-400 transition">Past Projects</a>
@@ -265,6 +273,7 @@
 </div>
             <a href="{% url 'partners' %}" class="hover:text-green-400  transition"><i class="fas fa-people-carry"></i> Partners</a>
             <a href="{% url 'trainings' %}" class="hover:text-green-400 transition"><i class="fas fa-graduation-cap"></i> Training</a>
+            <a href="#" class="hover:text-green-400 transition"><i class="fas fa-book"></i> Programs</a>
             {% if user.is_authenticated %}
             <div class="dropdown inline-block relative">
                 <a href="#" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition dropdown-toggle"><i class="fas fa-user"></i> Logout <i class="fas fa-angle-down"> </i></a>

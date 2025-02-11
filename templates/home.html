@@ -9,7 +9,7 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f9f9f9;
+
     }
 
     .impact-section, .about-section, .comprehensive-training-section, #partners {
@@ -137,33 +137,34 @@
     }
 
     .hero-section {
-        height: 80vh;
+        height: 90vh;
         background-size: cover;
         background-position: center;
         animation: changeBackground 20s normal infinite;
         background-image: url('/static/images/hero_image.jpg');
          z-index: 1;
-  will-change: background;
+
     }
 
     @keyframes changeBackground {
-        0%{ background-image: url('/static/images/hero_image.jpg'); }
-        35% { background-image: url('/static/images/postive.png'); }
-        75% { background-image: url('/static/images/vist.png'); }
-       100% { background-image: url('/static/images/hero_image.jpg'); }
+        0%,30%{ background-image: url('/static/images/hero_image.jpg'); }
+        35%,65% { background-image: url('/static/images/1.png'); }
+        75% ,90% { background-image: url('/static/images/2.png'); }
+       100% { background-image: url('/static/images/3.png'); }
     }
 
     .hero-title {
         color: var(--accent-color);
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         font-size: 2.5rem;
-        transition: transform 0.3s ease;
+        margin-top: 20px;
     }
-
-    .hero-title:hover {
-        transform: scale(1.05);
+    .hero-content {
+        text-align: center;
+        height: 100%;
+        padding: 20px;
+        margin-top: 100px;
     }
-
     .hero-button {
         background-color: #ba920d;
         border: none;
@@ -172,24 +173,12 @@
         padding: 12px 24px;
         border-radius: 0.5rem;
         margin: 10px;
-        transition: background-color 0.3s, transform 0.3s;
+
     }
 
     .hero-button:hover {
         background-color: #4a3a04;
         transform: translateY(-2px);
-    }
-
-    .testimonial {
-        margin-top: 20px;
-        padding: 20px;
-        background-color: rgba(255, 204, 0, 0.1);
-        border-radius: 8px;
-        transition: transform 0.3s;
-    }
-
-    .testimonial:hover {
-        transform: scale(1.02);
     }
 
     .number {
@@ -212,30 +201,6 @@
 
     .team-member img:hover {
         transform: scale(1.1);
-    }
-
-    .carousel {
-        display: flex;
-        overflow-x: scroll;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-    }
-
-    .carousel::-webkit-scrollbar {
-        display: none;
-    }
-
-    .carousel-item {
-        scroll-snap-align: center;
-        flex: 0 0 auto;
-        margin: 0 10px;
-        text-align: center;
-        transition: transform 0.3s;
-    }
-
-    .carousel-item:hover {
-        transform: scale(1.05);
     }
 
     .carousel-item img {
@@ -301,7 +266,7 @@
 
 <header class="h-screen hero-section bg-[#003366] text-white">
     <div class="flex items-center justify-center h-full bg-gray-800 bg-opacity-70">
-        <div class="text-center fade-in hero-content py-10">
+        <div class="text-center  hero-content py-20">
             <h1 class="text-4xl md:text-5xl font-bold hero-title text-yellow-300">
                 Empowering <span class="bg-yellow-300 text-gray-900 text-4xl">Communities</span> with EDA (Espoir de l’Avenir)
             </h1>
@@ -389,7 +354,7 @@
 </section>
 <section class="gallery-section py-10">
     <div class="container mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-6 highlight">Latest Trainings and Events EDA Gallery</h2>
+        <h2 class="text-3xl font-bold mb-6 highlight">Latest Trainings and Events of EDA</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             {% for image in images %}
             <div class="gallery-item relative">

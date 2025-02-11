@@ -451,10 +451,11 @@ def add_gallery(request):
 
 def delete_gallery(request, pk):
     galler = get_object_or_404(gallery, pk=pk)
-    if galler:
+    if request.method == 'POST':
         galler.delete()
         return redirect('gallery')
-    return redirect('gallery')
+
+
 
 
 def galleryView(request):
