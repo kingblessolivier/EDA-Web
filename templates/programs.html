@@ -1,0 +1,106 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Programs - Eda{% endblock %}
+
+{% block content %}
+
+<style>
+    .buttons {
+        display: inline-block;
+    }
+    .button-primary {
+        display: inline-block;
+        background-color: #4a3a04; /* Dark Green */
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        text-align: center;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    .button-primary:hover {
+        background-color: #9f7c06; /* Darker Green */
+        transform: scale(1.05);
+    }
+
+    .button-secondary {
+        display: inline-block;
+        background-color: #FBBF24; /* Yellow */
+        padding: 10px 20px;
+        color: white;
+        border-radius: 25px;
+        font-weight: bold;
+        border: none;
+        transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    }
+    .button-secondary:hover {
+        background-color: #F59E0B; /* Darker Yellow */
+        transform: scale(1.05);
+    }
+
+    .button-danger {
+        padding: 10px 20px;
+        border-radius: 25px;
+        text-align: center;
+        font-weight: bold;
+        color: red;
+        border: 2px solid #EF4444; /* Red border */
+        background-color: transparent;
+        transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    }
+    .button-danger:hover {
+        background-color: #EF4444; /* Red */
+        color: white;
+        transform: scale(1.05);
+    }
+    .hero-section {
+        height: 18vh;
+        background-color: rgb(37, 35, 5);
+    }
+</style>
+
+<section class="hero-section block h-10 py-10 items-center justify-center text-center bg-yellow-900 text-white">
+    <h1 class="text-4xl font-bold">Our Programs</h1>
+</section>
+
+<main class="container mx-auto py-10">
+    <h2 class="text-3xl font-semibold text-center mb-8">Available Programs</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-10">
+        {% for program in programs %}
+        <div class="bg-white shadow-md rounded-lg overflow-hidden transition-transform hover:shadow-lg border border-gray-300">
+            <img src="{{ program.image.url }}" alt="{{ program.name }}" class="w-full h-48 object-cover">
+            <div class="p-5">
+                <h3 class="text-xl font-semibold">{{ program.name }}</h3>
+                <p class="mt-2 text-gray-700">{{ program.description|truncatechars:100 }}</p>
+                <a href="{% url 'program_detail' program.id %}" class="button-primary">See More <i class="fas fa-arrow-circle-right"></i></a>
+                {% if user.is_authenticated %}
+                <div class="buttons">
+                    <a href="{% url 'update_program' program.id %}" class="button-secondary">Edit</a>
+                    <form action="{% url 'delete_program' program.id %}" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
+                        {% csrf_token %}
+                        <button type="submit" class="button-danger">Delete</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-gray-700 text-center">No programs available at the moment.</p>
+        {% endfor %}
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="text-center mt-6">
+        <a href="{% url 'add_program' %}" class="button-primary">Add Program</a>
+    </div>
+    {% endif %}
+</main>
+
+<script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this program?");
+    }
+</script>
+
+{% endblock %}

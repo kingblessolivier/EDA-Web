@@ -23,7 +23,8 @@ def index(request):
     partners = Partner.objects.all()[:4]
     trainings = Training.objects.filter()[:3]
     images=gallery.objects.all()
-    return render(request, 'home.html', {'projects': projects, 'partners': partners, 'trainings': trainings, 'images':images})
+    programs=Programs.objects.all()[:3]
+    return render(request, 'home.html', {'projects': projects, 'partners': partners, 'trainings': trainings, 'images':images, 'programs':programs})
 
 
 
@@ -393,7 +394,8 @@ def user_detail(request, pk):  # pk comes from the URL
 
 def customer_messages(request):
     messages= Contact.objects.all()
-    return render(request, 'customer_messages.html', {'messages': messages})
+    subscribers=Subscribe.objects.all()
+    return render(request, 'customer_messages.html', {'messages': messages,'subscribers': subscribers})
 
 
 def delete_message(request, pk):
@@ -475,3 +477,78 @@ def edit_gallery(request, pk):
             return redirect('gallery')
         return render(request, 'edit_galler.html', {'galle': galle})
     return render(request, 'edit_galley.html', {'galle': galle})
+
+
+def subscribe(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if email:
+            sub = Subscribe(email=email)
+            sub.save()
+            messages.success(request, 'You have successfully subscribed to our newsletter.')
+            return redirect('index')
+        else:
+            messages.error(request, 'Please enter a valid email address.')
+            return redirect('index')
+    return render(request,'home.html')
+
+def unsubscribe(request, pk):
+    sub = get_object_or_404(Subscribe, pk=pk)
+    if sub:
+        sub.delete()
+        messages.success(request, 'You have successfully unsubscribed from our newsletter.')
+        return redirect('customer_messages')
+    return redirect('customer_messages')
+
+
+def programs_view(request):
+    programs = Programs.objects.all()  # Fetch all programs
+    return render(request, 'programs.html', {
+        'programs': programs,
+    })
+
+
+def add_program_view(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        image = request.FILES.get('image')
+
+        program = Programs(name=name, description=description, image=image)
+        program.save()
+
+        return redirect('programs')  # Redirect to the programs list after saving
+
+    return render(request, 'add_program.html')
+
+
+def update_program_view(request, program_id):
+    program = get_object_or_404(Programs, id=program_id)
+
+    if request.method == 'POST':
+        program.name = request.POST.get('name')
+        program.description = request.POST.get('description')
+        image = request.FILES.get('image')
+
+        if image:
+            program.image = image
+        program.save()
+
+        return redirect('programs')  # Redirect to the programs list after updating
+
+    return render(request, 'update_program.html', {
+        'program': program,
+    })
+
+
+def delete_program_view(request, program_id):
+    program = get_object_or_404(Programs, id=program_id)
+    program.delete()
+    return redirect('programs')  # Redirect to the programs list after deletion
+
+
+def program_detail_view(request, program_id):
+    program = get_object_or_404(Programs, id=program_id)
+    return render(request, 'program_detail.html', {
+        'program': program,
+    })

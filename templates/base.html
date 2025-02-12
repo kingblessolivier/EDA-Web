@@ -36,7 +36,7 @@
         :root {
             --primary-color: rgb(74, 58, 4); /* Dark Blue */
             --accent-color: rgba(250, 233, 9, 0.91); /* Bright Yellow */
-            --background-color: rgba(248, 248, 248, 0.8); /* Light Background */
+            --background-color: rgb(248, 248, 248); /* Light Background */
             --dark-background: rgba(47, 79, 78, 0.04); /* Dark Background */
         }
 
@@ -214,13 +214,16 @@
         #mobile-menu.hidden {
             transform: translateY(-100%);
         }
+
     </style>
 </head>
 <body>
     <header>
         <nav id="navbar" class="flex justify-between items-center p-0  fixed w-full transition">
             <div class="flex justify-center flex-grow">
-                <a href="{% url 'index' %}"><img src="{% static 'images/eda_logoo.png' %}" alt="Eda Logo" class="w-20 rounded-full mr-4 ml-0" /></a>
+
+                <a href="{% url 'index' %}"><img src="{% static 'images/eda_logoo.png' %}" alt="Eda Logo" class="w-20 h-20 mr-4 ml-0 object-contain rounded-full"  /></a>
+
             </div>
             <div class="hidden md:flex flex-grow justify-center space-x-8 font-bold">
                 <a href="{% url 'index' %}" class="nav-item"> <i class="fas fa-home"></i> Home</a>
@@ -235,7 +238,7 @@
                 </div>
                 <a href="{% url 'partners' %}" class="nav-item"><i class="fas fa-handshake"></i> Partners</a>
                 <a href="{% url 'trainings' %}" class="nav-item"><i class="fas fa-graduation-cap"></i> Training</a>
-                  <a href="#" class="nav-item"><i class="fas fa-book"></i> Programs</a>
+                  <a href="{% url 'programs' %}" class="nav-item"><i class="fas fa-book"></i> Programs</a>
             </div>
             <div class="hidden md:flex items-center space-x-4 pr-6">
 
@@ -245,7 +248,7 @@
                     <a href="#" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition dropdown-toggle"><i class="fas fa-user"></i> {{ user.username }} <i class="fas fa-angle-down"> </i></a>
                     <div class="dropdown-content hidden bg-gray-800 text-gray-300 shadow-lg rounded-lg mt-2">
                         <a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-user"></i> Profile</a>
-                        <a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        <a href="{% url 'logout' %}" class="block px-4 py-2  hover:bg-green-400 transition" ><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </div>
                 {% else %}
@@ -273,10 +276,10 @@
 </div>
             <a href="{% url 'partners' %}" class="hover:text-green-400  transition"><i class="fas fa-people-carry"></i> Partners</a>
             <a href="{% url 'trainings' %}" class="hover:text-green-400 transition"><i class="fas fa-graduation-cap"></i> Training</a>
-            <a href="#" class="hover:text-green-400 transition"><i class="fas fa-book"></i> Programs</a>
+            <a href="{% url 'programs' %}" class="hover:text-green-400 transition"><i class="fas fa-book"></i> Programs</a>
             {% if user.is_authenticated %}
             <div class="dropdown inline-block relative">
-                <a href="#" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition dropdown-toggle"><i class="fas fa-user"></i> Logout <i class="fas fa-angle-down"> </i></a>
+                <a href="#" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition dropdown-toggle"><i class="fas fa-user"></i>  {{user.username }} <i class="fas fa-angle-down"> </i></a>
                 <div class="dropdown-content hidden bg-gray-800 text-gray-300 rounded-lg mt-2">
                     <a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-user"></i> Profile</a>
                     <a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-green-400 transition"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -297,7 +300,7 @@
         {% endblock %}
     </main>
 
-<footer class="py-8 mt-10">
+<footer class="py-8 mt-0">
     <div class="container mx-auto text-center">
         <p>&copy;2025 Eda. All rights reserved.</p>
         <div class="mt-4 space-x-4">

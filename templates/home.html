@@ -9,9 +9,102 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
+        background-color: white;
 
     }
+     .subscribe-section {
+        background-color: rgba(0, 51, 102, 0.9);
+        color: white;
+        padding: 40px 20px ;
+        text-align: center;
+         margin-bottom: 0;
+    }
 
+    .subscribe-section h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #FFB600;
+    }
+
+    .subscribe-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .subscribe-input {
+        padding: 10px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        margin-right: 10px;
+        width: 300px;
+    }
+
+    .subscribe-button {
+        background-color: #FFB600;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .subscribe-button:hover {
+        background-color: #FFD700;
+    }
+.programs-section {
+    background-color: #f9f9f9; /* Light background for contrast */
+    padding: 60px 20px; /* Padding for top and bottom */
+    text-align: center; /* Centered text */
+}
+
+.programs-section h2 {
+    color: #FFB600; /* Accent color for headings */
+    font-size: 3rem; /* Large font size for headings */
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+.program-item {
+    background-color: #ffff; /* White background for program cards */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 20px; /* Padding inside the card */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effects */
+}
+
+.program-item:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+
+.program-item h3 {
+    font-size: 1.5rem; /* Font size for program name */
+    margin: 10px 0; /* Margins for spacing */
+    color: #333; /* Dark text color */
+}
+
+.program-item p {
+    font-size: 1rem; /* Font size for program description */
+    color: #666; /* Lighter text color */
+}
+
+.program-item a {
+    display: inline-block; /* Inline block for the button */
+    background-color: #FFB600; /* Button background color */
+    color: #333; /* Button text color */
+    padding: 10px 15px; /* Padding for button */
+    border-radius: 5px; /* Rounded corners for button */
+    margin-top: 10px; /* Space above the button */
+    text-decoration: none; /* No underline */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transition effects */
+}
+
+.program-item a:hover {
+    background-color: #FFD700; /* Lighter background on hover */
+    transform: scale(1.05); /* Slight scale effect on hover */
+}
     .impact-section, .about-section, .comprehensive-training-section, #partners {
         padding: 60px 20px;
         text-align: center;
@@ -53,19 +146,51 @@
 }
 
     .impact-section {
-        background-color: #fff9f9;
-        color: rgba(0, 0, 0, 0.52);
+        color: rgb(255, 249, 249);
+        background-color: #1a1a1a;
+
+
     }
 
     .impact-item {
+        font-size: 1.2rem;
         border: none;
         border-radius: 8px;
-        margin: 10px;
+        padding: 10px;
+        margin: 5px;
+        text-align: center;
         transition: background-color 0.3s ease, transform 0.3s ease;
     }
+   .impact-section ul {
+        padding: 0;
 
+        list-style: none;
+        margin-top: 20px;
+
+   }
+   .impact-section p {
+        font-size: 1.2rem;
+        color: rgb(255, 255, 255);
+       text-align: left;
+   }
+   .impact-section ul li {
+        text-align: left;
+        list-style: none;
+        margin-bottom: 10px;
+        font-size: 1.2rem;
+        color: rgb(255, 255, 255);
+        line-height: 1.5;
+   }
+
+    .impact-item h1{
+        font-size: 1.5rem;
+        font-weight: bold;
+
+
+    }
     .impact-item:hover {
         background-color: rgba(255, 204, 0, 0.1);
+
         transform: translateY(-5px);
     }
 
@@ -249,7 +374,7 @@
 
     @media (max-width: 480px) {
         .hero-section {
-            height: 60%;
+            height: 80%;
         }
         .hero-content {
             text-align: center;
@@ -307,7 +432,7 @@
         {% for training in trainings %}
             <div class="training-item">
                 <h3>{{training.name}}</h3>
-                <p>{{training.description}}</p>
+                <p>{{training.description | truncatechars:100 }}</p>
                 <a href="{% url 'training_detail' training.id %}" class="cta-button">Learn More</a>
             </div>
         {% endfor %}
@@ -328,10 +453,40 @@
     </div>
 </section>
 
+<!-- Updated Programs Section -->
+<section class="programs-section py-10">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6 highlight">Our Programs</h2>
+        <p class="mb-6">Explore our diverse programs designed to empower communities and foster personal development.</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {% for program in programs %}
+
+            <div class="program-item bg-white rounded-lg shadow-md p-4">
+                <img src="{{ program.image.url }}" alt="{{ program.name }}" class="w-full h-48 object-cover rounded-lg shadow-md" />
+                <h3 class="text-xl font-semibold">{{ program.name }}</h3>
+                <p class="mt-2 text-gray-700">{{ program.description | truncatechars:100 }}</p>
+                <a href="{% url 'program_detail' program.id %}" class="mt-4 bg-yellow-300 text-gray-900 py-2 px-4 rounded hover:bg-yellow-400">Learn More <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+            {% empty %}
+            <p class="text-gray-700">No programs available at the moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
 <section class="impact-section">
     <div class="fade-in">
-        <h2 class="text-center text-primary font-bold text-3xl py-4 highlight">Our Impact</h2>
-        <p class="py-4 text-gray-700 text-lg mt-4">EDA has been making a significant difference in communities through various projects and initiatives.</p>
+        <h2 class=" highlight text-4xl font-bold  py-4">Our Impact</h2>
+        <p class="py-4 text-gray-700 text-lg mt-4">EDA has been making a significant difference in communities through various projects and initiatives over the years. Here are some of the ways EDA has made a positive impact:</p>
+            <ul class="mt-4 text-gray-700 text-lg">
+                <li><i class="fas fa-check"></i> <b>5000+</b> families supported through various programs and projects.</li>
+                <li><i class="fas fa-check"></i> <b>200+</b> projects completed in various sectors.</li>
+                <li><i class="fas fa-check"></i> <b>100%</b> satisfaction rate from participants.</li>
+                <li><i class="fas fa-check"></i> <b>1000+</b> graduates from our programs.</li>
+            </ul>
+
+
         <div class="training-container">
             <div class="impact-item">
                 <h3 class="number" data-target="5000">0</h3>
@@ -367,6 +522,24 @@
         </div>
     </div>
 </section>
+<section class="subscribe-section">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <h2>Subscribe to Our Newsletter</h2>
+    <p>Stay updated with our latest news and training programs.</p>
+    <form class="subscribe-form" action="{% url 'subscribe' %}" method="post">
+        {% csrf_token %}
+        <input type="email" class="subscribe-input" name="email" placeholder="Enter your email" required>
+        <button type="submit" class="subscribe-button">Subscribe</button>
+    </form>
+</section>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const numbers = document.querySelectorAll('.number');

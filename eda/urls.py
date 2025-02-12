@@ -48,7 +48,15 @@ urlpatterns += [
     path('add_gallery/', views.add_gallery, name='add_gallery'),
     path('delete_gallery/<int:pk>/', views.delete_gallery, name='delete_gallery'),
     path('gallery/', views.galleryView, name='gallery'),
-    path('edit_gallery/<int:pk>/', views.edit_gallery, name='edit_gallery')
+    path('edit_gallery/<int:pk>/', views.edit_gallery, name='edit_gallery'),
+    path('subscribe/', views.subscribe, name='subscribe'),
+    path('unsubscribe/<int:pk>/', views.unsubscribe, name='unsubscribe'),
+    path('programs/', programs_view, name='programs'),  # List all programs
+    path('add_program/', add_program_view, name='add_program'),  # Add a new program
+    path('update_program/<int:program_id>/', update_program_view, name='update_program'),  # Update a program
+    path('delete_program/<int:program_id>/', delete_program_view, name='delete_program'),
+    path('program/<int:program_id>/', program_detail_view, name='program_detail'),
+
 ]
 
 handler404 = views.custom_404_view

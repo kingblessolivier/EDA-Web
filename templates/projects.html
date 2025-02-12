@@ -84,7 +84,7 @@
                             <h3 class="project-card-title text-xl font-semibold mb-2">{{ project.name }}</h3>
                             <p class="project-card-description text-gray-700 mb-4">{{ project.description|truncatechars:100 }}</p>
                             <div class="flex items-center justify-between">
-                                <a href="{% url 'project_detail' project.id %}" class="button">Read More</a>
+                                <a href="{% url 'project_detail' project.id %}" class="button">Read More <i class="fas fa-arrow-circle-right "></i></a>
                                 {% if user.is_authenticated %}
                                     <div class="flex items-center">
                                         <a href="{% url 'edit_project' project.id %}" class="button edit-button mr-4">Edit</a>
@@ -117,7 +117,7 @@
                             <h3 class="project-card-title text-xl font-semibold mb-2">{{ project.name }}</h3>
                             <p class="project-card-description text-gray-700 mb-4">{{ project.description }}</p>
                             <div class="flex items-center justify-between">
-                                <a href="{% url 'project_detail' project.id %}" class="button">Read More</a>
+                                <a href="{% url 'project_detail' project.id %}" class="button">Read More <i class="fas fa-arrow-circle-right "></i></a>
                                 {% if user.is_authenticated %}
                                     <div class="flex items-center">
                                         <a href="{% url 'edit_project' project.id %}" class="button edit-button mr-4">Edit</a>
@@ -150,7 +150,7 @@
                             <h3 class="project-card-title text-xl font-semibold mb-2">{{ project.name }}</h3>
                             <p class="project-card-description text-gray-700 mb-4">{{ project.description }}</p>
                             <div class="flex items-center justify-between">
-                                <a href="{% url 'project_detail' project.id %}" class="button">Read More</a>
+                                <a href="{% url 'project_detail' project.id %}" class="button">Read More <i class="fas fa-arrow-circle-right "></i></a>
                                 {% if user.is_authenticated %}
                                     <div class="flex items-center">
                                         <a href="{% url 'edit_project' project.id %}" class="button edit-button mr-4">Edit</a>

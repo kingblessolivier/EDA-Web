@@ -12,7 +12,7 @@
     }
     .button-primary {
         display: inline-block;
-        background-color: #1D4ED8; /* Blue */
+        background-color: #4a3a04; /* Blue */
         color: white;
         padding: 10px 20px;
         border-radius: 25px;
@@ -21,7 +21,7 @@
         transition: background-color 0.3s, transform 0.2s;
     }
     .button-primary:hover {
-        background-color: #2563EB; /* Darker blue */
+        background-color: #9f7c06; /* Darker blue */
         transform: scale(1.05);
     }
 
@@ -80,7 +80,7 @@
             <div class="p-5">
                 <h3 class="text-xl font-semibold">{{ training.name }}</h3>
                 <p class="mt-2 text-gray-700">{{ training.description }}</p>
-                <a href="{% url 'training_detail' training.id %}" class="button-primary">Learn More</a>
+                <a href="{% url 'training_detail' training.id %}" class="button-primary">See More <i class="fas fa-arrow-circle-right "></i></a>
                 {% if user.is_authenticated %}
                 <div class="buttons">
                     <a href="{% url 'update_training' training.id %}" class="button-secondary">Edit</a>
