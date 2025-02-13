@@ -8,11 +8,24 @@
         height: 20vh;
         background-color: rgb(37, 35, 5);
     }
+      .container p{
+
+            font-size: 1.2rem;
+            line-height: 1.6rem;
+      }
+
+      .container h2{
+          color: #4a3a04;
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin-bottom: 1rem
+      }
+
 </style>
 
-<section class="hero-section block h-full py-24 items-center justify-center text-center bg-yellow-900 text-white">
+<section class="hero-section block h-full py-16 items-center justify-center text-center bg-yellow-900 text-white">
     <h1 class="text-4xl font-bold">{{ program.name }}</h1>
-    <p class="mt-4 text-lg">Details of the program.</p>
+
 </section>
 
 <main class="container mx-auto py-10">
@@ -27,7 +40,7 @@
             <a href="{% url 'update_program' program.id %}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Edit Program</a>
             <form action="{% url 'delete_program' program.id %}" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
                 {% csrf_token %}
-                <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">Delete Program</button>
+                <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600" style="padding: 5px 10px;"><i class="fas fa-trash"></i> Delete Program</button>
             </form>
         </div>
         {% endif %}

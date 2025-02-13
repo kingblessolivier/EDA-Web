@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Project, Training, Partner, Contact, Team, Subscribe
+from .models import User, Project, Training, Partner, Contact, Team, Subscribe,hero_image
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
@@ -44,3 +44,8 @@ class SubscribeAdmin(admin.ModelAdmin):
     list_display = ('email', 'created_at', 'updated_at')
     search_fields = ('email',)
     readonly_fields = ('created_at', 'updated_at')
+
+
+@admin.register(hero_image)
+class hero_imageAdmin(admin.ModelAdmin):
+    list_display = ('image', 'created_at', 'updated_at')

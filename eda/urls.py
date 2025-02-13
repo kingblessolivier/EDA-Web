@@ -56,6 +56,9 @@ urlpatterns += [
     path('update_program/<int:program_id>/', update_program_view, name='update_program'),  # Update a program
     path('delete_program/<int:program_id>/', delete_program_view, name='delete_program'),
     path('program/<int:program_id>/', program_detail_view, name='program_detail'),
+    path('add_hero_image/', add_hero_image, name='add_hero_image'),
+    path('delete_hero_image/<int:pk>/', delete_images_view, name='delete_hero_image'),
+    path('hero_images/', hero_image_view, name='hero_images')
 
 ]
 

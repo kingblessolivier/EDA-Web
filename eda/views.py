@@ -15,18 +15,27 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from .models import User
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Training
+from .forms import TrainingForm  # Make sure to create a form for Training
 from django.contrib.auth.hashers import make_password
 
 
 def index(request):
-    projects = Project.objects.all()[:3]
-    partners = Partner.objects.all()[:4]
-    trainings = Training.objects.filter()[:3]
-    images=gallery.objects.all()
-    programs=Programs.objects.all()[:3]
-    return render(request, 'home.html', {'projects': projects, 'partners': partners, 'trainings': trainings, 'images':images, 'programs':programs})
-
-
+    projects = Project.objects.all().order_by('-id')[:3]
+    partners = Partner.objects.all().order_by('-id')[:4]
+    trainings = Training.objects.all().order_by('-id')[:3]
+    images = gallery.objects.all().order_by('-id')[:8]
+    programs = Programs.objects.all().order_by('-id')[:4]
+    hero_images = hero_image.objects.all()
+    return render(request, 'home.html', {
+        'projects': projects,
+        'partners': partners,
+        'trainings': trainings,
+        'images': images,
+        'programs': programs,
+        'hero_images': hero_images
+    })
 
 def about(request):
     members=Team.objects.all()
@@ -41,9 +50,6 @@ def partners(request):
     return render(request, 'partners.html', {'partners': partners})
 
 
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Training
-from .forms import TrainingForm  # Make sure to create a form for Training
 
 # List trainings
 def training_list(request):
@@ -552,3 +558,31 @@ def program_detail_view(request, program_id):
     return render(request, 'program_detail.html', {
         'program': program,
     })
+
+def add_hero_image(request):
+    if request.method == 'POST':
+        image = request.FILES.get('image')  # Get the uploaded file
+
+        if image:
+            hero_images = hero_image(image=image)  # Create a HeroImage instance
+            hero_images.save()  # Save the instance to the database
+            messages.success(request, 'Hero image uploaded successfully!')
+            return redirect('hero_images')  # Redirect to the list of hero images
+        else:
+            messages.error(request, 'Please upload a valid image.')
+
+    return render(request, 'add_hero_image.html')  # Render the upload template
+
+
+def hero_image_view(request):
+    hero_images = hero_image.objects.all()
+    return render(request, 'hero_images.html', {
+        'hero_images': hero_images,
+    })
+
+def delete_images_view(request, pk):
+    hero = get_object_or_404(hero_image, pk=pk)
+    hero.delete()
+    messages.success(request, 'Hero image deleted successfully.')
+    return redirect('hero_images')
+

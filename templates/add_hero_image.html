@@ -1,0 +1,110 @@
+﻿{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .upload-section {
+        max-width: 500px;
+        margin: auto;
+        padding: 40px;
+        text-align: center;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .upload-section h2 {
+        margin-bottom: 20px;
+        color: #FFB600;
+        font-size: 24px;
+    }
+
+    .upload-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .upload-input {
+        margin: 10px 0;
+        padding: 10px;
+        border: 2px solid #FFB600;
+        border-radius: 5px;
+        width: 100%;
+        max-width: 300px;
+        transition: border-color 0.3s;
+    }
+
+    .upload-input:focus {
+        border-color: #FFD700;
+        outline: none;
+    }
+
+    .upload-button {
+        background-color: #FFB600;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .upload-button:hover {
+        background-color: #FFD700;
+    }
+
+    .back-link {
+        margin-top: 15px;
+        color: #FFB600;
+        text-decoration: none;
+        padding: 10px 20px;
+        border: 2px solid #FFB600;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .back-link:hover {
+        background-color: #FFD700;
+    }
+
+    @media (max-width: 600px) {
+        .upload-section {
+            padding: 20px;
+        }
+
+        .upload-section h2 {
+            font-size: 20px;
+        }
+
+        .upload-input {
+            max-width: 100%;
+        }
+    }
+</style>
+
+<div class="upload-section">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <h2>Upload Hero Image</h2>
+    <form class="upload-form" action="{% url 'add_hero_image' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" class="upload-input" name="image" accept="image/*" required>
+        <button type="submit" class="upload-button">Upload Image</button>
+        <a href="{% url 'hero_images' %}" class="back-link">Go Back</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+﻿{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .hero-images-section {
+        padding: 40px;
+        text-align: center;
+        background-color: #f9f9f9;
+    }
+
+    .hero-images-section h2 {
+        margin-bottom: 30px;
+        color: #FFB600;
+        font-size: 28px;
+    }
+
+    .card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.2s;
+    }
+
+    .card:hover {
+        transform: scale(1.02);
+    }
+
+    .card img {
+        width: 200px;  /* Set fixed width */
+        height: 200px; /* Set fixed height */
+        object-fit: cover; /* Crop images to fit */
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .upload-time {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .button-group {
+        margin-top: 10px;
+    }
+
+    .button {
+        background-color: #FFB600;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+        background-color: #FFD700;
+    }
+
+    .grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .grid-item {
+        flex: 1 1 calc(33.333% - 20px); /* 3 items per row with space */
+        margin: 10px;
+        box-sizing: border-box;
+    }
+
+    @media (max-width: 768px) {
+        .grid-item {
+            flex: 1 1 calc(50% - 20px); /* 2 items per row on smaller screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .grid-item {
+            flex: 1 1 100%; /* 1 item per row on very small screens */
+        }
+    }
+</style>
+
+<div class="hero-images-section">
+    <h2>Hero Images</h2>
+    <div class="grid">
+        {% for hero in hero_images %}
+        <div class="grid-item">
+            <div class="card">
+                <img src="{{ hero.image.url }}" alt="Hero Image">
+                <div class="upload-time">Uploaded on: {{ hero.created_at|date:"F j, Y, g:i a" }}</div>
+                <div class="button-group">
+                    <form action="{% url 'delete_hero_image' hero.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="button">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No hero images available.</p>
+        {% endfor %}
+    </div>
+    <div class="button-group">
+        <a href="{% url 'add_hero_image' %}" class="button">Add Hero Image</a>
+    </div>
+</div>
+{% endblock %}
