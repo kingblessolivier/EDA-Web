@@ -263,18 +263,18 @@
         height: 90vh;
         background-size: cover;
         background-position: center;
-        animation: changeBackground 20s normal infinite;
-         z-index: 1;
+        background-repeat: no-repeat;
         position: relative;
+         z-index: 1;
+
         overflow: hidden;
     }
 
     .carousel {
         display: flex;
-        transition: transform 1s ease-in-out;
+        position: absolute;
         width: 100%;
         height: 100%;
-        position: absolute;
         top: 0;
         left: 0;
          overflow: hidden;
@@ -285,7 +285,65 @@
         height: 100%;
         background-size: cover;
         background-position: center;
-
+        opacity: 0.8;
+        position: relative;
+        transition: opacity 0.5s ease;
+    }
+    .carousel-item:nth-child(1) {
+        animation: fadeIn 1s ease-in-out forwards;
+        }
+    .carousel-item:nth-child(2) {
+        animation: fadeIn 1s ease-in-out 0.5s forwards;
+        }
+    .carousel-item:nth-child(3) {
+        animation: fadeIn 1s ease-in-out 1s forwards;
+        }
+    .carousel-item:nth-child(4) {
+        animation: fadeIn 1s ease-in-out 1s forwards;
+        }
+    .carousel-item:nth-child(5) {
+        animation: fadeIn 2s ease-in-out 2s forwards;
+        }
+    .carousel-item:nth-child(6) {
+        animation: fadeIn 1s ease-in-out 1s forwards;
+        }
+    .carousel-item:nth-child(7) {
+        animation: fadeIn 2s ease-in-out 3s forwards;
+        }
+    @keyframes fadeIn {
+        0% {
+            opacity: 0.6;
+        }
+        100% {
+            opacity: 0.8;
+        }
+    }
+    .carousel-item:nth-child(1) {
+        animation-delay: 0s;
+        }
+    .carousel-item:nth-child(2) {
+        animation-delay: 0.5s;
+        }
+    .carousel-item:nth-child(3) {
+        animation-delay: 1s;
+        }
+    .carousel-item:nth-child(4) {
+        animation-delay: 1.5s;
+        }
+    .carousel-item:nth-child(5) {
+        animation-delay: 2s;
+        }
+    .carousel-item:nth-child(6) {
+        animation-delay: 2.5s;
+        }
+    .carousel-item:nth-child(7) {
+        animation-delay: 3s;
+        }
+    .carousel-item:nth-child(8) {
+        animation-delay: 3.5s;
+        }
+    .carousel-item:nth-child(9) {
+        animation-delay: 4s;
     }
 
     .hero-content {
@@ -422,7 +480,7 @@
         <div class="carousel-item " style="background-image: url('{{ hero.image.url }}'); background-size: cover; background-position: center; opacity: 0.8;}"></div>
         {% endfor %}
     </div>
-    <div class="flex items-center justify-center h-full bg-gray-800 bg-opacity-0">
+    <div class="flex items-center justify-center h-full bg-gray-800 bg-opacity-98">
         <div class="text-center hero-content py-20">
             <h1 class="text-4xl md:text-5xl font-bold hero-title text-yellow-300">
                 Empowering <span class="bg-yellow-300 text-yellow-900 text-4xl">Communities</span> with EDA (Espoir de l’Avenir)
@@ -615,24 +673,17 @@
         observer.observe(document.querySelector('.impact-section'));
     });
     let currentIndex = 0;
-
 function changeBackground() {
     const slides = document.querySelectorAll('.carousel-item');
     const totalSlides = slides.length;
-
-    // Update the background image
     slides.forEach((slide, index) => {
         slide.style.display = (index === currentIndex) ? 'block' : 'none';
+
     });
 
-    // Move to the next index
-    currentIndex = (currentIndex + 1) % totalSlides; // Loop back to first slide
-}
+    currentIndex = (currentIndex + 1) % totalSlides;
+}changeBackground();
 
-// Initial background
-changeBackground();
-
-// Change background every 10 seconds
 setInterval(changeBackground, 5000);
 </script>
 
